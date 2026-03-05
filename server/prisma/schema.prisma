@@ -1,0 +1,148 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// ── User ────────────────────────────────────────────────────────────────────
+
+enum AuthProvider {
+  LOCAL
+  GOOGLE
+}
+
+model User {
+  id        String       @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String       @unique
+  password  String?      // null when signed up via OAuth
+  provider  AuthProvider @default(LOCAL)
+  avatar    String?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  aiCourses AiCourse[]
+}
+
+// ── AI-Generated Courses ────────────────────────────────────────────────────
+
+model AiCourse {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String   @db.ObjectId
+  title             String
+  topic             String
+  description       String
+  level             String   // beginner | intermediate | advanced | expert
+  goal              String
+  tone              String   // professional | casual | technical
+  targetAudience    String?
+  prerequisites     String?
+  sectionCount      Int      @default(5)
+  completedSections Int      @default(0)
+  timeCommitment    String   @default("30 min/day")
+  startDate         DateTime?
+  endDate           DateTime?
+  status            String   @default("draft") // draft | generating | active | completed
+  isComplete        Boolean  @default(false)
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  user     User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  sections AiCourseSection[]
+}
+
+model AiCourseSection {
+  id              String    @id @default(auto()) @map("_id") @db.ObjectId
+  courseId         String    @db.ObjectId
+  sectionNumber   Int
+  title           String
+  previousContext String?
+  isCompleted     Boolean   @default(false)
+  completedAt     DateTime?
+  createdAt       DateTime  @default(now())
+
+  course             AiCourse              @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  articlePages       AiArticlePage[]
+  mindMaps           AiMindMap[]
+  flashcards         AiFlashcard[]
+  mcqQuestions       AiMcqQuestion[]
+  trueFalseQuestions AiTrueFalseQuestion[]
+  fillUpQuestions    AiFillUpQuestion[]
+}
+
+model AiArticlePage {
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId  String    @db.ObjectId
+  pageNumber Int
+  pageTitle  String
+  content    String
+  isRead     Boolean   @default(false)
+  readAt     DateTime?
+
+  section AiCourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
+
+model AiMindMap {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId String @db.ObjectId
+  data      String // JSON-stringified mind-map tree
+
+  section AiCourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
+
+model AiFlashcard {
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId    String    @db.ObjectId
+  front        String
+  back         String
+  reviewCount  Int       @default(0)
+  correctCount Int       @default(0)
+  difficulty   Int       @default(3)
+  nextReviewAt DateTime?
+
+  section AiCourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
+
+model AiMcqQuestion {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId   String    @db.ObjectId
+  question    String
+  options     String    // JSON-stringified string[]
+  answer      String
+  isAttempted Boolean   @default(false)
+  userAnswer  String?
+  isCorrect   Boolean?
+  attemptedAt DateTime?
+
+  section AiCourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
+
+model AiTrueFalseQuestion {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId   String    @db.ObjectId
+  question    String
+  answer      Boolean
+  explanation String
+  isAttempted Boolean   @default(false)
+  userAnswer  Boolean?
+  isCorrect   Boolean?
+  attemptedAt DateTime?
+
+  section AiCourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
+
+model AiFillUpQuestion {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  sectionId   String    @db.ObjectId
+  sentence    String
+  missingWord String
+  isAttempted Boolean   @default(false)
+  userAnswer  String?
+  isCorrect   Boolean?
+  attemptedAt DateTime?
+
+  section AiCourseSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+}
