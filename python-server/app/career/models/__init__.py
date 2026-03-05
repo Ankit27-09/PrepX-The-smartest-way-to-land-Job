@@ -1,0 +1,1 @@
+"""Career simulation data models."""
