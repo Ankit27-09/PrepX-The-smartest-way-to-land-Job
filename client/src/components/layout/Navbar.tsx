@@ -33,12 +33,13 @@ const Navbar = () => {
   };
 
   const navLinks = [
-    { label: "Features", href: "#features" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Testimonials", href: "#testimonials" },
+    { label: "Features", href: "/#features" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "Testimonials", href: "/#testimonials" },
     { label: "Courses", href: "/courses", isRoute: true },
     { label: "PDF Chat", href: "/pdf-chat", isRoute: true },
     { label: "Career Path", href: "/career-path", isRoute: true },
+    { label: "Jobs", href: "/jobs", isRoute: true },
     { label: "AI Tutor", href: "/ai-tutor", isRoute: true },
   ];
 
