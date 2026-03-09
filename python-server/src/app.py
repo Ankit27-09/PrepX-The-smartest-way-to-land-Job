@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse
 # ── Feature routers (add new features here) ──────────────────────────────────
 from src.routers.pdf_chat import router as pdf_chat_router
 from src.routers.ai_tutor import router as ai_tutor_router
+from src.routers.jobs import router as jobs_router
 from app.career.router import router as career_router
 
 
@@ -35,6 +36,7 @@ def create_app() -> FastAPI:
     app.include_router(pdf_chat_router)
     app.include_router(career_router)
     app.include_router(ai_tutor_router)
+    app.include_router(jobs_router, prefix="/api", tags=["jobs"])
 
     @app.get("/")
     async def root():
