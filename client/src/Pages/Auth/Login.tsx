@@ -1,11 +1,11 @@
 "use client";
 import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { Eye, EyeOff, Sparkles, ArrowRight, Loader2 } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { login, googleLogin } from "@/store/auth/authSlice";
 
 const Login = () => {
@@ -17,6 +17,11 @@ const Login = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const user = useAppSelector((s) => s.auth.user);
+  const redirectTo = (location.state as { from?: string })?.from || "/courses";
+
+  if (user) return <Navigate to={redirectTo} replace />;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -24,7 +29,7 @@ const Login = () => {
     setLoading(true);
     try {
       await dispatch(login({ email, password })).unwrap();
-      navigate("/courses");
+      navigate(redirectTo);
     } catch (err) {
       setError(err instanceof Error ? err.message : String(err));
     } finally {
@@ -38,7 +43,7 @@ const Login = () => {
       setLoading(true);
       try {
         await dispatch(googleLogin(tokenResponse.access_token)).unwrap();
-        navigate("/courses");
+        navigate(redirectTo);
       } catch (err) {
         setError(err instanceof Error ? err.message : String(err));
       } finally {

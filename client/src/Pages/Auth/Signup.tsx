@@ -1,11 +1,11 @@
 "use client";
 import { useState, type FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, Navigate } from "react-router-dom";
 import { motion } from "motion/react";
 import { Eye, EyeOff, Sparkles, ArrowRight, Check, Loader2 } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Spotlight } from "@/components/ui/spotlight-new";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { signup, googleLogin } from "@/store/auth/authSlice";
 
 const Signup = () => {
@@ -18,6 +18,9 @@ const Signup = () => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
+  const user = useAppSelector((s) => s.auth.user);
+
+  if (user) return <Navigate to="/courses" replace />;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
