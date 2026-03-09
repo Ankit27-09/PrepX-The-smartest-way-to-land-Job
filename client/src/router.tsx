@@ -1,13 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "@/components/layout/RootLayout";
-import Home from "@/pages/Home/Home";
-import Login from "@/pages/Auth/Login";
-import Signup from "@/pages/Auth/Signup";
-import CoursesPage from "@/pages/Courses/CoursesPage";
-import CourseDetailPage from "@/pages/Courses/CourseDetailPage";
-import PdfChatPage from "@/pages/PdfChat/PdfChatPage";
-import CareerPathPage from "@/pages/Career/CareerPathPage";
-import AITutorPage from "@/pages/AITutor/AITutorPage";
+import ProtectedRoute from "@/components/auth/ProtectedRoute";
+import Home from "./Pages/Home/Home";
+import Login from "./Pages/Auth/Login";
+import Signup from "./Pages/Auth/Signup";
+import CoursesPage from "./Pages/Courses/CoursesPage";
+import CourseDetailPage from "./Pages/Courses/CourseDetailPage";
+import PdfChatPage from "./Pages/PdfChat/PdfChatPage";
+import CareerPathPage from "./Pages/Career/CareerPathPage";
+import AITutorPage from "./Pages/AITutor/AITutorPage";
+import JobsPage from "./Pages/Job/JobsPage";
+import JobResultsPage from "./Pages/Job/JobResultsPage";
+import JobHistoryPage from "./Pages/Job/JobHistoryPage";
 
 export const router = createBrowserRouter([
   {
@@ -19,19 +23,31 @@ export const router = createBrowserRouter([
       },
       {
         path: "/courses",
-        element: <CoursesPage />,
+        element: <ProtectedRoute><CoursesPage /></ProtectedRoute>,
       },
       {
         path: "/courses/:courseId",
-        element: <CourseDetailPage />,
+        element: <ProtectedRoute><CourseDetailPage /></ProtectedRoute>,
       },
       {
         path: "/pdf-chat",
-        element: <PdfChatPage />,
+        element: <ProtectedRoute><PdfChatPage /></ProtectedRoute>,
       },
       {
         path: "/career-path",
-        element: <CareerPathPage />,
+        element: <ProtectedRoute><CareerPathPage /></ProtectedRoute>,
+      },
+      {
+        path: "/jobs",
+        element: <ProtectedRoute><JobHistoryPage /></ProtectedRoute>,
+      },
+      {
+        path: "/jobs/new",
+        element: <ProtectedRoute><JobsPage /></ProtectedRoute>,
+      },
+      {
+        path: "/jobs/:searchId",
+        element: <ProtectedRoute><JobResultsPage /></ProtectedRoute>,
       },
     ],
   },
