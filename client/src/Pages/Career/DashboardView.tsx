@@ -1,6 +1,6 @@
 /* ── Dashboard View — Full simulation results with charts ─────────────── */
 import { useState } from "react";
-import { useCareerStore } from "@/lib/career-store";
+import { useCareerStore } from "../../lib/career-store";
 import {
   BarChart3,
   TrendingUp,

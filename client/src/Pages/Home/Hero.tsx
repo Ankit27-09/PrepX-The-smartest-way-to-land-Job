@@ -19,17 +19,6 @@ const Hero = () => {
         waveOpacity={0.4}
       >
         <div className="flex flex-col items-center text-center">
-          {/* Badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 backdrop-blur-sm">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-cyan-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-cyan-500" />
-            </span>
-            <span className="text-sm font-medium text-zinc-300">
-              AI-Powered Interview Platform
-            </span>
-          </div>
-
           {/* Main Heading */}
           <h1 className="mb-2 text-4xl font-extrabold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
             The smartest way to
