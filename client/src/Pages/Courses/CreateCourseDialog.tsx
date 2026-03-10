@@ -241,7 +241,7 @@ export default function CreateCourseDialog({
                 <button
                   onClick={handleCreate}
                   disabled={!topic.trim() || creating}
-                  className="flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-lg hover:shadow-cyan-500/25 disabled:opacity-40 disabled:cursor-not-allowed"
+                  className="flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 px-5 py-2.5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-cyan-500/40 disabled:opacity-40 disabled:cursor-not-allowed"
                 >
                   {creating && <Loader2 className="h-4 w-4 animate-spin" />}
                   {creating ? "Generating…" : "Generate Course"}

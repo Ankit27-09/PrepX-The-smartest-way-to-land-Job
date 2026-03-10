@@ -185,7 +185,7 @@ export default function SimulateForm() {
           ) : (
             <button
               onClick={analyze}
-              className="flex items-center gap-2 rounded-lg bg-linear-to-r from-cyan-500 to-violet-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition hover:shadow-cyan-500/40"
+              className="flex items-center gap-2 rounded-lg bg-cyan-500 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-cyan-500/25 transition-all hover:bg-cyan-400 hover:shadow-cyan-500/40"
             >
               <Rocket className="h-4 w-4" /> Analyze My Career
             </button>
@@ -768,15 +768,6 @@ function ReviewStep({
         {field("Investment Capacity", profile.investment_capacity)}
         {field("Hours / Week", profile.hours_per_week)}
         {field("Concerns", profile.career_concerns)}
-      </div>
-
-      <div className="pt-2 text-center">
-        <button
-          onClick={onSubmit}
-          className="inline-flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-violet-500 px-8 py-3 font-bold text-white shadow-lg shadow-cyan-500/25 transition hover:shadow-cyan-500/40"
-        >
-          <Rocket className="h-5 w-5" /> Launch AI Career Analysis
-        </button>
       </div>
     </div>
   );

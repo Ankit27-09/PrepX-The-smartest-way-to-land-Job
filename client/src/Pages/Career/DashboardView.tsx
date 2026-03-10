@@ -1,6 +1,7 @@
 /* ── Dashboard View — Full simulation results with charts ─────────────── */
 import { useState } from "react";
 import { useCareerStore } from "../../lib/career-store";
+import { CareerVoiceAgent } from "../../components/CareerVoice";
 import {
   BarChart3,
   TrendingUp,
@@ -161,6 +162,9 @@ export default function DashboardView() {
           </span>
         )}
       </div>
+
+      {/* Career Voice Counselor — floating popup */}
+      <CareerVoiceAgent />
     </div>
   );
 }
