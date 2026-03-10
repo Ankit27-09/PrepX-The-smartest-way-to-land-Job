@@ -8,63 +8,120 @@ import {
 } from "lucide-react";
 import type { ArticlePage } from "./types";
 import { apiMarkArticleRead } from "@/lib/api";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { vscDarkPlus } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 interface ArticleViewProps {
   pages: ArticlePage[];
   sectionTitle: string;
 }
 
-/** Very small Markdown-ish renderer (keeps things dependency-free). */
+/** Parse content into blocks: paragraphs, headings, lists, code blocks, etc. */
+function parseBlocks(content: string) {
+  const normalized = content.replace(/\\n/g, "\n");
+  const lines = normalized.split("\n");
+  const blocks: Array<
+    | { type: "heading"; level: number; text: string }
+    | { type: "paragraph"; text: string }
+    | { type: "list-item"; ordered: boolean; text: string }
+    | { type: "code"; lang: string; code: string }
+    | { type: "blank" }
+  > = [];
+
+  let i = 0;
+  while (i < lines.length) {
+    const trimmed = lines[i].trim();
+
+    // Code block: collect everything between ``` markers
+    if (trimmed.startsWith("```")) {
+      const lang = trimmed.slice(3).trim();
+      const codeLines: string[] = [];
+      i++;
+      while (i < lines.length && !lines[i].trim().startsWith("```")) {
+        codeLines.push(lines[i]);
+        i++;
+      }
+      i++; // skip closing ```
+      blocks.push({ type: "code", lang: lang || "text", code: codeLines.join("\n") });
+      continue;
+    }
+
+    if (!trimmed) {
+      blocks.push({ type: "blank" });
+    } else if (trimmed.startsWith("### ")) {
+      blocks.push({ type: "heading", level: 3, text: trimmed.slice(4) });
+    } else if (trimmed.startsWith("## ")) {
+      blocks.push({ type: "heading", level: 2, text: trimmed.slice(3) });
+    } else if (trimmed.startsWith("# ")) {
+      blocks.push({ type: "heading", level: 1, text: trimmed.slice(2) });
+    } else if (trimmed.startsWith("- ")) {
+      blocks.push({ type: "list-item", ordered: false, text: trimmed.slice(2) });
+    } else if (/^\d+\.\s/.test(trimmed)) {
+      blocks.push({ type: "list-item", ordered: true, text: trimmed.replace(/^\d+\.\s/, "") });
+    } else {
+      blocks.push({ type: "paragraph", text: trimmed });
+    }
+    i++;
+  }
+
+  return blocks;
+}
+
+/** Markdown-style renderer with VS Code-like syntax-highlighted code blocks. */
 function SimpleMarkdown({ content }: { content: string }) {
-  const lines = content.split("\n");
+  const blocks = parseBlocks(content);
 
   return (
     <div className="prose-invert max-w-none space-y-3 text-sm leading-relaxed text-zinc-300">
-      {lines.map((line, i) => {
-        const trimmed = line.trim();
-        if (!trimmed) return <br key={i} />;
-        if (trimmed.startsWith("### "))
-          return (
-            <h3 key={i} className="text-base font-semibold text-white mt-4">
-              {trimmed.slice(4)}
-            </h3>
-          );
-        if (trimmed.startsWith("## "))
-          return (
-            <h2 key={i} className="text-lg font-bold text-white mt-5">
-              {trimmed.slice(3)}
-            </h2>
-          );
-        if (trimmed.startsWith("# "))
-          return (
-            <h1 key={i} className="text-xl font-bold text-white mt-6">
-              {trimmed.slice(2)}
-            </h1>
-          );
-        if (trimmed.startsWith("- "))
-          return (
-            <li key={i} className="ml-4 list-disc text-zinc-400">
-              {renderInline(trimmed.slice(2))}
-            </li>
-          );
-        if (/^\d+\.\s/.test(trimmed)) {
-          const text = trimmed.replace(/^\d+\.\s/, "");
-          return (
-            <li key={i} className="ml-4 list-decimal text-zinc-400">
-              {renderInline(text)}
-            </li>
-          );
+      {blocks.map((block, i) => {
+        switch (block.type) {
+          case "blank":
+            return <br key={i} />;
+          case "heading":
+            if (block.level === 1)
+              return <h1 key={i} className="text-xl font-bold text-white mt-6">{block.text}</h1>;
+            if (block.level === 2)
+              return <h2 key={i} className="text-lg font-bold text-white mt-5">{block.text}</h2>;
+            return <h3 key={i} className="text-base font-semibold text-white mt-4">{block.text}</h3>;
+          case "list-item":
+            return (
+              <li key={i} className={`ml-4 ${block.ordered ? "list-decimal" : "list-disc"} text-zinc-400`}>
+                {renderInline(block.text)}
+              </li>
+            );
+          case "code":
+            return (
+              <div key={i} className="rounded-xl border border-white/10 overflow-hidden my-4">
+                <div className="flex items-center justify-between px-4 py-2 bg-[#1e1e1e] border-b border-white/5">
+                  <span className="text-[11px] font-medium text-zinc-500 uppercase tracking-wider">{block.lang}</span>
+                  <button
+                    onClick={() => navigator.clipboard.writeText(block.code)}
+                    className="text-[11px] text-zinc-500 hover:text-zinc-300 transition-colors"
+                  >
+                    Copy
+                  </button>
+                </div>
+                <SyntaxHighlighter
+                  language={block.lang}
+                  style={vscDarkPlus}
+                  customStyle={{
+                    margin: 0,
+                    padding: "1rem 1.25rem",
+                    background: "#1e1e1e",
+                    fontSize: "13px",
+                    lineHeight: "1.6",
+                    borderRadius: 0,
+                  }}
+                  showLineNumbers
+                  lineNumberStyle={{ color: "#555", fontSize: "12px", paddingRight: "1em", minWidth: "2em" }}
+                >
+                  {block.code}
+                </SyntaxHighlighter>
+              </div>
+            );
+          case "paragraph":
+            return <p key={i}>{renderInline(block.text)}</p>;
         }
-        if (trimmed.startsWith("```"))
-          return (
-            <pre
-              key={i}
-              className="rounded-lg border border-white/10 bg-white/5 p-4 text-xs text-cyan-300 overflow-x-auto"
-            >
-              {trimmed.replace(/```\w*/, "")}
-            </pre>
-          );
-        return <p key={i}>{renderInline(trimmed)}</p>;
       })}
     </div>
   );

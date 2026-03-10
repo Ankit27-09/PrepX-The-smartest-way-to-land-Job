@@ -20,14 +20,13 @@ interface CreateCourseDialogProps {
 }
 
 const LEVELS = ["Beginner", "Intermediate", "Advanced"];
-const TONES = ["Formal", "Friendly", "Concise", "Detailed"];
+const TONES = ["Professional", "Casual", "Technical"];
 const TIME_OPTIONS = ["15 min/day", "30 min/day", "1 hr/day", "Flexible"];
 
 const TONE_MAP: Record<string, string> = {
-  Formal: "professional",
-  Friendly: "casual",
-  Concise: "concise",
-  Detailed: "detailed",
+  Professional: "professional",
+  Casual: "casual",
+  Technical: "technical",
 };
 
 export default function CreateCourseDialog({
@@ -41,7 +40,7 @@ export default function CreateCourseDialog({
   const [topic, setTopic] = useState("");
   const [level, setLevel] = useState("Intermediate");
   const [goal, setGoal] = useState("");
-  const [tone, setTone] = useState("Friendly");
+  const [tone, setTone] = useState("Casual");
   const [sections, setSections] = useState(5);
   const [time, setTime] = useState("30 min/day");
   const [error, setError] = useState<string | null>(null);
