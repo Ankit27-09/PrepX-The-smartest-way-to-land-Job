@@ -28,7 +28,8 @@ class JobDiscoveryService:
         manual_input: Optional[ManualJobInput] = None,
         location: Optional[str] = None,
         remote_only: bool = False,
-        hybrid_ok: bool = True
+        hybrid_ok: bool = True,
+        user_id: Optional[str] = None,
     ) -> JobResultsResponse:
         resume_profile = None
         
@@ -76,7 +77,8 @@ class JobDiscoveryService:
             preferences=preferences,
             scored_jobs=jobs_response,
             insights=None,  
-            jobs_count=len(jobs_response)
+            jobs_count=len(jobs_response),
+            user_id=user_id,
         )
         
         return JobResultsResponse(
@@ -132,11 +134,11 @@ class JobDiscoveryService:
         preferences: JobPreferences,
         scored_jobs: List[ScoredJobResponse],
         insights: dict,
-        jobs_count: int
+        jobs_count: int,
+        user_id: Optional[str] = None,
     ) -> None:
         try:
-            searches_col = MongoDB.get_collection("job_searches")
-            await searches_col.insert_one({
+            doc = {
                 "_id": ObjectId(search_id),
                 "profile": profile,
                 "manual_input": manual_input.model_dump() if manual_input else None,
@@ -144,8 +146,12 @@ class JobDiscoveryService:
                 "scored_jobs": [job.model_dump() for job in (scored_jobs or [])],
                 "insights": insights if insights else None,
                 "jobs_count": jobs_count,
-                "created_at": datetime.utcnow()
-            })
+                "created_at": datetime.utcnow(),
+            }
+            if user_id:
+                doc["user_id"] = user_id
+            searches_col = MongoDB.get_collection("job_searches")
+            await searches_col.insert_one(doc)
         except Exception as e:
             print(f"Failed to save search to DB: {e}")
     
@@ -258,9 +264,13 @@ class JobDiscoveryService:
             
         return doc.get("insights", {})
 
-    async def get_search_results(self, search_id: str, skip: int = 0, limit: int = 20) -> dict:
+    async def get_search_results(self, search_id: str, user_id: Optional[str] = None, skip: int = 0, limit: int = 20) -> dict:
+        query = {"_id": ObjectId(search_id)}
+        if user_id:
+            query["user_id"] = user_id
+
         count_doc = await MongoDB.get_collection("job_searches").find_one(
-            {"_id": ObjectId(search_id)},
+            query,
             {"jobs_count": 1, "insights": 1}
         )
         
@@ -268,7 +278,7 @@ class JobDiscoveryService:
             raise ValueError(f"Search {search_id} not found")
 
         doc = await MongoDB.get_collection("job_searches").find_one(
-            {"_id": ObjectId(search_id)},
+            query,
             {
                 "scored_jobs": {"$slice": [skip, limit]},
                 "jobs_count": 1
@@ -287,6 +297,8 @@ class JobDiscoveryService:
 
     async def list_searches(self, user_id: Optional[str] = None, limit: int = 20) -> List[dict]:
         query = {}
+        if user_id:
+            query["user_id"] = user_id
 
         cursor = MongoDB.get_collection("job_searches").find(query).sort("created_at", -1).limit(limit)
         
@@ -309,10 +321,11 @@ class JobDiscoveryService:
             
         return results
 
-    async def delete_search(self, search_id: str) -> bool:
-        result = await MongoDB.get_collection("job_searches").delete_one(
-            {"_id": ObjectId(search_id)}
-        )
+    async def delete_search(self, search_id: str, user_id: Optional[str] = None) -> bool:
+        query = {"_id": ObjectId(search_id)}
+        if user_id:
+            query["user_id"] = user_id
+        result = await MongoDB.get_collection("job_searches").delete_one(query)
         return result.deleted_count > 0
 
 

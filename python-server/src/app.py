@@ -11,6 +11,7 @@ from src.routers.pdf_chat import router as pdf_chat_router
 from src.routers.ai_tutor import router as ai_tutor_router
 from src.routers.jobs import router as jobs_router
 from src.routers.interview import interview_router, livekit_router, results_router, code_router
+from src.routers.career_voice import router as career_voice_router
 from app.career.router import router as career_router
 
 
@@ -36,6 +37,7 @@ def create_app() -> FastAPI:
     # ── Register routers ─────────────────────────────────────────────────
     app.include_router(pdf_chat_router)
     app.include_router(career_router)
+    app.include_router(career_voice_router)
     app.include_router(ai_tutor_router)
     app.include_router(jobs_router, prefix="/api", tags=["jobs"])
     app.include_router(interview_router)
