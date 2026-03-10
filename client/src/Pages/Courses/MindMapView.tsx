@@ -21,9 +21,9 @@ interface MindMapViewProps {
 
 /* ── Layout helpers ──────────────────────────────────────────────────────── */
 
-const X_GAP = 260;
-const Y_BRANCH = 160;
-const Y_LEAF = 60;
+const X_GAP = 400;
+const Y_BRANCH = 200;
+const Y_LEAF = 80;
 
 function buildGraph(section: SectionContent) {
   const nodes: Node[] = [];
@@ -91,17 +91,15 @@ function buildGraph(section: SectionContent) {
       ...edgeDefaults,
     });
 
-    // Leaf nodes
-    const leafStartX = bx - ((branch.items.length - 1) * 110) / 2;
-
+    // Leaf nodes — stack vertically under each branch
     branch.items.forEach((item, li) => {
       const leafId = `${branch.id}-leaf-${li}`;
       nodes.push({
         id: leafId,
         type: "leafNode",
         position: {
-          x: leafStartX + li * 110,
-          y: by + Y_BRANCH / 2 + Y_LEAF + li * Y_LEAF,
+          x: bx,
+          y: by + Y_LEAF + 40 + li * Y_LEAF,
         },
         data: { label: item },
       });
