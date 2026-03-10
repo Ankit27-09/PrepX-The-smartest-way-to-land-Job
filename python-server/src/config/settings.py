@@ -82,5 +82,18 @@ class Settings:
     def jobspy_country_indeed(self) -> str:
         return os.getenv("JOBSPY_COUNTRY_INDEED", "India")
 
+    # ── LiveKit ──────────────────────────────────────────────────────────
+    @property
+    def livekit_url(self) -> str:
+        return os.getenv("LIVEKIT_URL", "")
+
+    @property
+    def livekit_api_key(self) -> str:
+        return os.getenv("LIVEKIT_API_KEY", "")
+
+    @property
+    def livekit_api_secret(self) -> str:
+        return os.getenv("LIVEKIT_API_SECRET", "")
+
 
 settings = Settings()

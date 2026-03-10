@@ -44,7 +44,7 @@ class JobVectorService:
         if recreate:
             try:
                 self.client.delete_collection(name=collection_name)
-            except:
+            except Exception:
                 pass  
 
         collection = self.client.get_or_create_collection(
@@ -116,7 +116,7 @@ class JobVectorService:
         
         try:
             collection = self.client.get_collection(name=collection_name, embedding_function=self.embedding_fn)
-        except:
+        except Exception:
             print(f"Collection not found for search {search_id}")
             return []
 
@@ -142,7 +142,7 @@ class JobVectorService:
         try:
             self.client.delete_collection(name=collection_name)
             return True
-        except:
+        except Exception:
             return False
     
     async def calculate_semantic_match(
