@@ -1,5 +1,7 @@
-from fastapi import APIRouter, HTTPException, UploadFile, File, status
+from fastapi import APIRouter, HTTPException, UploadFile, File, status, Cookie, Header
 import logging
+import os
+import jwt
 
 from src.models.jobs.schemas import (
     ManualJobInput,
@@ -15,6 +17,27 @@ from src.services.jobs.job_chat_service import get_job_chat_service
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
+
+JWT_SECRET = os.getenv("JWT_SECRET", "change-me-to-a-strong-random-secret")
+
+
+def _extract_user_id(
+    token_cookie: str | None = None,
+    authorization: str | None = None,
+) -> str | None:
+    """Pull user_id from JWT (cookie or Authorization header)."""
+    raw: str | None = None
+    if token_cookie:
+        raw = token_cookie
+    elif authorization and authorization.startswith("Bearer "):
+        raw = authorization[7:]
+    if not raw:
+        return None
+    try:
+        payload = jwt.decode(raw, JWT_SECRET, algorithms=["HS256"])
+        return payload.get("id") or payload.get("userId") or payload.get("_id")
+    except Exception:
+        return None
 
 @router.post("/jobs/upload-resume", response_model=ResumeParseResponse)
 async def upload_resume(file: UploadFile = File(...)):
@@ -55,13 +78,19 @@ async def upload_resume(file: UploadFile = File(...)):
 
 
 @router.post("/jobs/search", response_model=JobResultsResponse)
-async def search_jobs(request: JobSearchRequest):
+async def search_jobs(
+    request: JobSearchRequest,
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
     if not request.profile and not request.manual_input:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Either 'profile' (from resume upload) or 'manual_input' is required"
         )
     
+    user_id = _extract_user_id(token, authorization)
+
     try:
         service = get_job_discovery_service()
         return await service.search_jobs(
@@ -69,7 +98,8 @@ async def search_jobs(request: JobSearchRequest):
             manual_input=request.manual_input,
             location=request.location,
             remote_only=request.remote_only,
-            hybrid_ok=request.hybrid_ok
+            hybrid_ok=request.hybrid_ok,
+            user_id=user_id,
         )
         
     except HTTPException:
@@ -103,21 +133,38 @@ async def refine_search(request: ChatRefinementRequest):
         )
 
 @router.get("/jobs/history")
-async def list_searches(limit: int = 20):
+async def list_searches(
+    limit: int = 20,
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
+    user_id = _extract_user_id(token, authorization)
     service = get_job_discovery_service()
-    return await service.list_searches(limit=limit)
+    return await service.list_searches(user_id=user_id, limit=limit)
 
 
 @router.get("/jobs/history/{search_id}", response_model=JobResultsResponse)
-async def get_search_results(search_id: str, skip: int = 0, limit: int = 20):
+async def get_search_results(
+    search_id: str,
+    skip: int = 0,
+    limit: int = 20,
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
+    user_id = _extract_user_id(token, authorization)
     service = get_job_discovery_service()
-    return await service.get_search_results(search_id, skip=skip, limit=limit)
+    return await service.get_search_results(search_id, user_id=user_id, skip=skip, limit=limit)
 
 
 @router.delete("/jobs/history/{search_id}")
-async def delete_search(search_id: str):
+async def delete_search(
+    search_id: str,
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
+    user_id = _extract_user_id(token, authorization)
     service = get_job_discovery_service()
-    deleted = await service.delete_search(search_id)
+    deleted = await service.delete_search(search_id, user_id=user_id)
     if not deleted:
         raise HTTPException(status_code=404, detail="Search not found")
     return {"success": True}

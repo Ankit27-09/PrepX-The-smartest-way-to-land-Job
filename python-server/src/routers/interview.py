@@ -3,18 +3,41 @@ Interview feature routes — CRUD, LiveKit tokens, results, code execution.
 """
 
 import json
+import os
 import time
 import uuid
 from datetime import datetime, timezone
 
 import httpx
+import jwt
 from bson import ObjectId
-from fastapi import APIRouter, UploadFile, File, HTTPException, Query
+from fastapi import APIRouter, UploadFile, File, HTTPException, Query, Cookie, Header
 from fastapi.responses import JSONResponse
 from livekit.api import AccessToken, VideoGrants, RoomAgentDispatch, RoomConfiguration
 
 from src.db.mongodb import MongoDB
 from src.config.settings import settings
+
+JWT_SECRET = os.getenv("JWT_SECRET", "change-me-to-a-strong-random-secret")
+
+
+def _extract_user_id(
+    token_cookie: str | None = None,
+    authorization: str | None = None,
+) -> str | None:
+    """Pull user_id from JWT (cookie or Authorization header)."""
+    raw: str | None = None
+    if token_cookie:
+        raw = token_cookie
+    elif authorization and authorization.startswith("Bearer "):
+        raw = authorization[7:]
+    if not raw:
+        return None
+    try:
+        payload = jwt.decode(raw, JWT_SECRET, algorithms=["HS256"])
+        return payload.get("id") or payload.get("userId") or payload.get("_id")
+    except Exception:
+        return None
 from src.models.interview import (
     ManualJDRequest,
     JobDetailsResponse,
@@ -45,7 +68,7 @@ def _validate_object_id(id_string: str, label: str = "ID") -> ObjectId:
 interview_router = APIRouter(prefix="/api/interviews", tags=["interviews"])
 
 
-async def _process_jd(jd_text: str, source: str) -> JobDetailsResponse:
+async def _process_jd(jd_text: str, source: str, user_id: str | None = None) -> JobDetailsResponse:
     """Common logic: extract details via AI, save to MongoDB, return response."""
     try:
         job_details = await extract_job_details(jd_text)
@@ -63,6 +86,8 @@ async def _process_jd(jd_text: str, source: str) -> JobDetailsResponse:
         "created_at": datetime.now(timezone.utc),
         "updated_at": datetime.now(timezone.utc),
     }
+    if user_id:
+        interview_doc["user_id"] = user_id
 
     result = await collection.insert_one(interview_doc)
 
@@ -74,10 +99,15 @@ async def _process_jd(jd_text: str, source: str) -> JobDetailsResponse:
 
 
 @interview_router.get("/", response_model=list[InterviewListItem])
-async def list_interviews():
-    """Get all interviews for the dashboard."""
+async def list_interviews(
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
+    """Get all interviews for the dashboard (scoped to logged-in user)."""
+    user_id = _extract_user_id(token, authorization)
     collection = MongoDB.get_collection("interviews")
-    cursor = collection.find().sort("created_at", -1)
+    query = {"user_id": user_id} if user_id else {}
+    cursor = collection.find(query).sort("created_at", -1)
     interviews = []
 
     async for doc in cursor:
@@ -102,7 +132,11 @@ async def list_interviews():
 
 
 @interview_router.post("/upload-jd", response_model=JobDetailsResponse)
-async def upload_jd(file: UploadFile = File(...)):
+async def upload_jd(
+    file: UploadFile = File(...),
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
     """Upload a PDF job description, extract text, parse with AI, save to DB."""
     if not file.filename or not file.filename.lower().endswith(".pdf"):
         raise HTTPException(status_code=400, detail="Only PDF files are accepted.")
@@ -118,13 +152,19 @@ async def upload_jd(file: UploadFile = File(...)):
     except Exception:
         raise HTTPException(status_code=422, detail="Failed to read the PDF file. It may be corrupted.")
 
-    return await _process_jd(jd_text, source="pdf_upload")
+    user_id = _extract_user_id(token, authorization)
+    return await _process_jd(jd_text, source="pdf_upload", user_id=user_id)
 
 
 @interview_router.post("/manual-jd", response_model=JobDetailsResponse)
-async def manual_jd(request: ManualJDRequest):
+async def manual_jd(
+    request: ManualJDRequest,
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
     """Submit a manually written job description, parse with AI, save to DB."""
-    return await _process_jd(request.jd_text, source="manual")
+    user_id = _extract_user_id(token, authorization)
+    return await _process_jd(request.jd_text, source="manual", user_id=user_id)
 
 
 @interview_router.post("/{interview_id}/upload-resume", response_model=InterviewResponse)
@@ -358,11 +398,23 @@ results_router = APIRouter(prefix="/api/results", tags=["results"])
 
 
 @results_router.get("/{interview_id}")
-async def get_results(interview_id: str):
+async def get_results(
+    interview_id: str,
+    token: str | None = Cookie(None),
+    authorization: str | None = Header(None),
+):
     """Get both precise and detailed results for an interview."""
+    user_id = _extract_user_id(token, authorization)
+    interviews_col = MongoDB.get_collection("interviews")
     collection = MongoDB.get_collection("results")
 
-    _validate_object_id(interview_id, "interview ID")
+    obj_id = _validate_object_id(interview_id, "interview ID")
+
+    # Verify ownership
+    if user_id:
+        interview = await interviews_col.find_one({"_id": obj_id, "user_id": user_id})
+        if not interview:
+            raise HTTPException(status_code=404, detail="Results not found for this interview.")
 
     result = await collection.find_one({"interview_id": interview_id})
     if not result:

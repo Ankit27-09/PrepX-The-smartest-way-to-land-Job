@@ -22,7 +22,7 @@ app.use(cookieParser());
 // ── Routes ──────────────────────────────────────────────────────────────────
 
 app.get("/", (_req, res) => {
-  res.json({ status: "ok", message: "PrepX API is running 🚀" });
+  res.json({ status: "ok", message: "PrepX API is running " });
 });
 
 app.use("/api/auth", authRoutes);
