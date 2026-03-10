@@ -67,10 +67,13 @@ export const TutorSessionView = forwardRef<HTMLDivElement, TutorSessionViewProps
                     disabled && 'pointer-events-none'
                 )}
             >
+                {/* Media Tiles (Avatar, Camera, Screen Share) */}
+                <MediaTiles chatOpen={chatOpen} />
+
                 {/* Chat Messages */}
                 <ChatMessageView
                     className={cn(
-                        'mx-auto min-h-screen w-full max-w-2xl px-4 pt-32 pb-48 transition-all duration-300',
+                        'fixed inset-x-0 top-20 bottom-36 z-30 mx-auto w-full max-w-2xl overflow-y-auto px-4 py-6 transition-all duration-300',
                         chatOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
                     )}
                 >
@@ -90,9 +93,6 @@ export const TutorSessionView = forwardRef<HTMLDivElement, TutorSessionViewProps
                         </AnimatePresence>
                     </ul>
                 </ChatMessageView>
-
-                {/* Media Tiles (Avatar, Camera, Screen Share) */}
-                <MediaTiles chatOpen={chatOpen} />
 
                 {/* Control Bar */}
                 <div className="fixed right-0 bottom-0 left-0 z-50 p-4">
