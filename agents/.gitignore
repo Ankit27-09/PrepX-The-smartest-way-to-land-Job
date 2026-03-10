@@ -1,5 +1,26 @@
-agent_env/
-.venv/
+# Byte-compiled / optimized / DLL files
 __pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Environment variables
 .env
-./.env
+
+# Uploads (user-generated at runtime)
+uploads/
+
+# ChromaDB local storage
+chroma_data/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
