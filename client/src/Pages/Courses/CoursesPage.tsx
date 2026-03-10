@@ -127,7 +127,7 @@ export default function CoursesPage() {
           </div>
           <button
             onClick={() => setDialogOpen(true)}
-            className="group flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-lg hover:shadow-cyan-500/25"
+            className="group flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 px-5 py-2.5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-cyan-500/40"
           >
             <Plus className="h-4 w-4 transition-transform group-hover:rotate-90" />
             New Course

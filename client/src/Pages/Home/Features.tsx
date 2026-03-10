@@ -1,53 +1,53 @@
 "use client";
 import { CardContainer, CardBody, CardItem } from "@/components/ui/3d-card";
-import { Brain, Route, FileText, Target, MessageSquare, TrendingUp } from "lucide-react";
+import { Brain, Route, FileText, BookOpen, Search, MonitorPlay } from "lucide-react";
 
 const features = [
   {
-    icon: Brain,
-    title: "AI Mock Interviews",
+    icon: BookOpen,
+    title: "AI Course Generation",
     description:
-      "Practice with our intelligent AI interviewer that adapts to your skill level, industry, and role. Get real-time feedback on your answers, body language tips, and improvement strategies.",
+      "Generate customized courses tailored to your goals. Learn via interactive flashcards, dynamic mind maps, and comprehensive AI quizzes.",
     gradient: "from-cyan-500 to-blue-600",
     shadowColor: "shadow-cyan-500/20",
   },
   {
-    icon: Route,
-    title: "Career Roadmaps",
+    icon: FileText,
+    title: "Smart PDF Chat",
     description:
-      "Get a personalized career path with step-by-step milestones, skill requirements, and timeline estimates. Powered by real industry data and hiring trends.",
+      "Transform static documents into interactive learning experiences. Chat directly with your PDFs to extract insights and generate instant summaries.",
     gradient: "from-violet-500 to-purple-600",
     shadowColor: "shadow-violet-500/20",
   },
   {
-    icon: FileText,
-    title: "Resume Analysis",
+    icon: Route,
+    title: "Graph Career Paths",
     description:
-      "Upload your resume and get instant AI-powered feedback. Identify weak points, optimize for ATS systems, and tailor your resume for specific job postings.",
+      "Visualize your future with an interactive graph-based career roadmap. Receive tailored, step-by-step milestones to land your dream role.",
     gradient: "from-pink-500 to-rose-600",
     shadowColor: "shadow-pink-500/20",
   },
   {
-    icon: Target,
-    title: "Skill Assessment",
+    icon: Search,
+    title: "ATS Job Discovery",
     description:
-      "Evaluate your technical and soft skills with comprehensive assessments. Get a detailed score breakdown and personalized improvement plan.",
+      "Unlock smart job hunting connected directly to company ATS systems. Instantly discover and track relevant job roles matching your customized roadmap.",
     gradient: "from-amber-500 to-orange-600",
     shadowColor: "shadow-amber-500/20",
   },
   {
-    icon: MessageSquare,
-    title: "Behavioral Coaching",
+    icon: MonitorPlay,
+    title: "Live AI Tutor",
     description:
-      "Master the STAR method and craft compelling stories for behavioral interviews. Our AI analyzes your responses and suggests powerful improvements.",
+      "Connect with a real-time voice and video webRTC agent. Share your code or screen and get instant, multimodal educational assistance.",
     gradient: "from-emerald-500 to-teal-600",
     shadowColor: "shadow-emerald-500/20",
   },
   {
-    icon: TrendingUp,
-    title: "Progress Tracking",
+    icon: Brain,
+    title: "AI Mock Interviews",
     description:
-      "Monitor your interview performance over time with detailed analytics. Track confidence levels, response quality, and areas for improvement.",
+      "Practice via live video with an intelligent AI interviewer that adapts to your skill level. Get real-time feedback and improvement strategies.",
     gradient: "from-blue-500 to-indigo-600",
     shadowColor: "shadow-blue-500/20",
   },
@@ -62,9 +62,6 @@ const Features = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="mx-auto mb-16 max-w-3xl text-center md:mb-20">
-          <span className="mb-4 inline-block rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-cyan-400">
-            Features
-          </span>
           <h2 className="mb-5 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
             Everything you need to{" "}
             <span className="text-cyan-400">
