@@ -117,6 +117,7 @@ export default function CreateInterviewPage() {
         try {
             const updateRes = await fetch(`${API_BASE}/${formData.interviewId}`, {
                 method: "PUT",
+                credentials: 'include',
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                     job_details: {
@@ -155,6 +156,7 @@ export default function CreateInterviewPage() {
 
             const publishRes = await fetch(`${API_BASE}/${formData.interviewId}/publish`, {
                 method: "POST",
+                credentials: 'include',
             });
 
             if (!publishRes.ok) {

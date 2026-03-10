@@ -32,9 +32,8 @@ const Hero = () => {
           </div>
 
           {/* Subtitle */}
-          <p className="mb-10 max-w-2xl text-base font-normal text-zinc-400 sm:text-lg md:text-xl">
-            PrepX uses cutting-edge AI to simulate real interviews, provide personalized career
-            guidance, and help you land your dream role — faster than ever.
+          <p className="mb-10 max-w-2xl text-base font-medium text-white/95 drop-shadow-md sm:text-lg md:text-xl">
+            Your unfair advantage in the tech job market. Master live interviews, map complex career paths, and upskill faster with a real-time AI co-pilot.
           </p>
 
           {/* CTA Buttons */}
@@ -53,21 +52,6 @@ const Hero = () => {
             </button>
           </div>
 
-          {/* Stats */}
-          <div className="mt-16 grid grid-cols-3 gap-8 border-t border-white/10 pt-8 md:gap-16">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white md:text-3xl">50K+</div>
-              <div className="text-xs text-zinc-500 md:text-sm">Active Users</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white md:text-3xl">1M+</div>
-              <div className="text-xs text-zinc-500 md:text-sm">Interviews Done</div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-white md:text-3xl">95%</div>
-              <div className="text-xs text-zinc-500 md:text-sm">Success Rate</div>
-            </div>
-          </div>
         </div>
       </WavyBackground>
     </section>

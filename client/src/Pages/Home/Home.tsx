@@ -1,7 +1,6 @@
 import Hero from "./Hero";
 import Features from "./Features";
 import HowItWorks from "./HowItWorks";
-import Testimonials from "./Testimonials";
 import CTASection from "./CTASection";
 
 const Home = () => {
@@ -10,7 +9,6 @@ const Home = () => {
       <Hero />
       <Features />
       <HowItWorks />
-      <Testimonials />
       <CTASection />
     </>
   );
