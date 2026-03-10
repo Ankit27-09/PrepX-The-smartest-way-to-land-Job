@@ -112,7 +112,7 @@ export default function InterviewsPage() {
 
     const fetchInterviews = async () => {
         try {
-            const res = await fetch(`${API_BASE}/`);
+            const res = await fetch(`${API_BASE}/`, { credentials: 'include' });
             if (!res.ok) throw new Error("Failed to fetch interviews");
             const data = await res.json();
             setInterviews(data);
