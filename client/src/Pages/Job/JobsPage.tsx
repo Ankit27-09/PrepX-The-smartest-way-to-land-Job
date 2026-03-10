@@ -6,7 +6,7 @@
  */
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Briefcase, Upload, FileText, Sparkles, Loader2, Plus, X, ArrowRight } from 'lucide-react';
+import { Briefcase, Upload, FileText, Loader2, Plus, X, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { parseResume, searchJobs, type ResumeProfile, type ManualJobInput, type JobSearchResponse } from '@/lib/jobsApi';
 
@@ -420,7 +420,7 @@ export default function JobsPage() {
                                 </>
                             ) : (
                                 <>
-                                    <Sparkles className="w-5 h-5" />
+                                    
                                     Find Jobs
                                     <ArrowRight className="w-4 h-4" />
                                 </>

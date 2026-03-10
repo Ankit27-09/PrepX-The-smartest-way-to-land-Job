@@ -9,20 +9,47 @@ Two-stage flow:
 import os
 import time
 import tempfile
+import logging
+from datetime import datetime, timezone
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, UploadFile, File
+import jwt
+from fastapi import APIRouter, Cookie, Header, HTTPException, Request, UploadFile, File
 from pydantic import BaseModel
 
+from src.db.mongodb import MongoDB
 from .graph import (
     run_career_matching_async,
     run_career_simulation_for_selected_async,
 )
 
+logger = logging.getLogger("career-router")
+
 router = APIRouter(prefix="/api/career", tags=["career"])
+
+JWT_SECRET = os.getenv("JWT_SECRET", "change-me-to-a-strong-random-secret")
 
 # ─── In-memory session store (swap with Redis in production) ─────────────────
 _session_store: dict[str, dict] = {}
+
+
+def _extract_user_id(
+    token_cookie: str | None = None,
+    authorization: str | None = None,
+) -> str | None:
+    """Pull user_id from JWT (cookie or Authorization header)."""
+    raw: str | None = None
+    if token_cookie:
+        raw = token_cookie
+    elif authorization and authorization.startswith("Bearer "):
+        raw = authorization[7:]
+    if not raw:
+        return None
+    try:
+        payload = jwt.decode(raw, JWT_SECRET, algorithms=["HS256"])
+        return payload.get("id") or payload.get("userId") or payload.get("_id")
+    except jwt.PyJWTError:
+        return None
 
 
 # ─── Request / Response schemas ──────────────────────────────────────────────
@@ -221,7 +248,11 @@ async def analyze_career_fits(request: AnalyzeRequest):
 
 
 @router.post("/simulate/selected", response_model=SimulationResponse)
-async def simulate_selected_career(request: SelectCareerRequest):
+async def simulate_selected_career(
+    request: SelectCareerRequest,
+    token: str | None = Cookie(default=None),
+    authorization: str | None = Header(default=None),
+):
     """Stage 2: Run the full simulation for the career the user selected."""
     start = time.time()
 
@@ -254,7 +285,7 @@ async def simulate_selected_career(request: SelectCareerRequest):
     summary = _extract_summary(result)
     timeline = _extract_timeline(result)
 
-    return SimulationResponse(
+    response = SimulationResponse(
         success=True,
         simulation_id=f"sim_{int(time.time())}",
         processing_time_ms=elapsed_ms,
@@ -267,6 +298,60 @@ async def simulate_selected_career(request: SelectCareerRequest):
         warnings=result.get("warnings", []),
         errors=result.get("errors", []),
     )
+
+    # ── Save to MongoDB if user is authenticated ────────────────────────
+    user_id = _extract_user_id(token, authorization)
+    if user_id:
+        try:
+            col = MongoDB.get_collection("career_roadmaps")
+            roadmap_doc = {
+                "user_id": user_id,
+                "simulation_id": response.simulation_id,
+                "selected_career": summary.get("selected_career"),
+                "summary": summary,
+                "dashboard_data": response.dashboard_data,
+                "timeline": response.timeline,
+                "financial_analysis": response.financial_analysis,
+                "risk_assessment": response.risk_assessment,
+                "gap_analysis": response.gap_analysis,
+                "warnings": response.warnings,
+                "created_at": datetime.now(timezone.utc),
+                "updated_at": datetime.now(timezone.utc),
+            }
+            # Upsert — one roadmap per user (latest simulation wins)
+            await col.update_one(
+                {"user_id": user_id},
+                {"$set": roadmap_doc},
+                upsert=True,
+            )
+            logger.info("Saved career roadmap for user %s", user_id)
+        except Exception as e:
+            logger.warning("Failed to save career roadmap: %s", e)
+
+    return response
+
+
+@router.get("/roadmap")
+async def get_saved_roadmap(
+    token: str | None = Cookie(default=None),
+    authorization: str | None = Header(default=None),
+):
+    """Return the user's saved career roadmap from MongoDB (if any)."""
+    user_id = _extract_user_id(token, authorization)
+    if not user_id:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+
+    col = MongoDB.get_collection("career_roadmaps")
+    doc = await col.find_one({"user_id": user_id})
+    if not doc:
+        return {"found": False}
+
+    doc["_id"] = str(doc["_id"])
+    if "created_at" in doc:
+        doc["created_at"] = doc["created_at"].isoformat()
+    if "updated_at" in doc:
+        doc["updated_at"] = doc["updated_at"].isoformat()
+    return {"found": True, "roadmap": doc}
 
 
 # ─── Helpers ─────────────────────────────────────────────────────────────────
