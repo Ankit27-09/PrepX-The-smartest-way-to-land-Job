@@ -171,7 +171,7 @@ export default function FlashcardViewer({
           </p>
           <button
             onClick={resetDeck}
-            className="mt-5 flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-medium text-white hover:shadow-lg hover:shadow-cyan-500/25"
+            className="mt-5 flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 px-5 py-2.5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-cyan-500/40"
           >
             <RotateCcw className="h-4 w-4" />
             Review Again

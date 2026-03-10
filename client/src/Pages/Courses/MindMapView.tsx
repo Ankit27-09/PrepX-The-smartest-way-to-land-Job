@@ -169,7 +169,7 @@ export default function MindMapView({ sectionContent }: MindMapViewProps) {
             className={`flex items-center gap-2 rounded-full px-6 py-3 font-medium shadow-lg transition-all ${
               isUnderstood
                 ? "bg-emerald-500 text-white"
-                : "bg-linear-to-r from-cyan-500 to-blue-500 text-white hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/25"
+                : "bg-cyan-500 hover:bg-cyan-400 text-white hover:scale-105 hover:shadow-xl hover:shadow-cyan-500/40"
             }`}
           >
             <CheckCircle className="h-5 w-5" />
