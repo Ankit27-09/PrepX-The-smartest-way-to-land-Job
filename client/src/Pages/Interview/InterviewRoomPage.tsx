@@ -69,6 +69,7 @@ export default function InterviewRoomPage() {
       try {
         const res = await fetch(CONNECTION_DETAILS_ENDPOINT, {
           method: 'POST',
+          credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             interview_id: interviewId,

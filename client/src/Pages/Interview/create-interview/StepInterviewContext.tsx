@@ -56,6 +56,7 @@ export default function StepInterviewContext({ data, updateData, interviewId }: 
 
             const res = await fetch(`${API_BASE}/${interviewId}/upload-resume`, {
                 method: "POST",
+                credentials: 'include',
                 body: formData,
             });
 
