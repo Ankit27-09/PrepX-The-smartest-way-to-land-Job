@@ -41,6 +41,7 @@ const Navbar = () => {
     { label: "Career Path", href: "/career-path", isRoute: true },
     { label: "Jobs", href: "/jobs", isRoute: true },
     { label: "AI Tutor", href: "/ai-tutor", isRoute: true },
+    { label: "Interview", href: "/interviews", isRoute: true },
   ];
 
   /** Render the user's avatar or a fallback initial circle. */

@@ -12,6 +12,10 @@ import AITutorPage from "./Pages/AITutor/AITutorPage";
 import JobsPage from "./Pages/Job/JobsPage";
 import JobResultsPage from "./Pages/Job/JobResultsPage";
 import JobHistoryPage from "./Pages/Job/JobHistoryPage";
+import InterviewsPage from "./Pages/Interview/InterviewsPage";
+import CreateInterviewPage from "./Pages/Interview/CreateInterviewPage";
+import InterviewRoomPage from "./Pages/Interview/InterviewRoomPage";
+import ResultsPage from "./Pages/Interview/ResultsPage";
 
 export const router = createBrowserRouter([
   {
@@ -49,7 +53,23 @@ export const router = createBrowserRouter([
         path: "/jobs/:searchId",
         element: <ProtectedRoute><JobResultsPage /></ProtectedRoute>,
       },
+      {
+        path: "/interviews",
+        element: <ProtectedRoute><InterviewsPage /></ProtectedRoute>,
+      },
+      {
+        path: "/create-interview",
+        element: <ProtectedRoute><CreateInterviewPage /></ProtectedRoute>,
+      },
+      {
+        path: "/results",
+        element: <ProtectedRoute><ResultsPage /></ProtectedRoute>,
+      },
     ],
+  },
+  {
+    path: "/interview-room",
+    element: <ProtectedRoute><InterviewRoomPage /></ProtectedRoute>,
   },
   {
     path: "/ai-tutor",
