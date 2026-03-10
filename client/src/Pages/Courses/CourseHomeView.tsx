@@ -194,7 +194,7 @@ export default function CourseHomeView({
               );
               dispatch(fetchCourseDetail(course.id));
             }}
-            className="flex items-center gap-2 rounded-xl bg-linear-to-r from-cyan-500 to-blue-500 px-5 py-2.5 text-sm font-medium text-white transition-shadow hover:shadow-lg hover:shadow-cyan-500/25 disabled:opacity-50"
+            className="flex items-center gap-2 rounded-xl bg-cyan-500 hover:bg-cyan-400 px-5 py-2.5 text-sm font-medium text-white transition-all hover:shadow-lg hover:shadow-cyan-500/40 disabled:opacity-50"
           >
             {generating ? (
               <>
