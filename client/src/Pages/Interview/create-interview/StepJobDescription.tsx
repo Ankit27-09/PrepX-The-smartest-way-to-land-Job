@@ -79,6 +79,7 @@ export default function StepJobDescription({
 
                 response = await fetch(`${API_BASE}/upload-jd`, {
                     method: "POST",
+                    credentials: 'include',
                     body: formData,
                 });
             } else {
@@ -90,6 +91,7 @@ export default function StepJobDescription({
 
                 response = await fetch(`${API_BASE}/manual-jd`, {
                     method: "POST",
+                    credentials: 'include',
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ jd_text: data.jdText }),
                 });

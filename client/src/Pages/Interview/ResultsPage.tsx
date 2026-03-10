@@ -210,7 +210,7 @@ export default function ResultsPage() {
         }
         (async () => {
             try {
-                const res = await fetch(`${API_BASE}/results/${interviewId}`);
+                const res = await fetch(`${API_BASE}/results/${interviewId}`, { credentials: 'include' });
                 if (!res.ok) {
                     if (res.status === 404) {
                         setError("Results are not ready yet. The recording is still being analyzed.");
