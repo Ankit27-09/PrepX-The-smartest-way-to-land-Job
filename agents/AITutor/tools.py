@@ -42,23 +42,104 @@ async def send_session_summary(
             logging.error("Gmail credentials not found in environment variables")
             return "Email sending failed: Gmail credentials not configured."
 
-        subject = f"Your AI Tutor Session Summary - {datetime.now().strftime('%B %d, %Y')}"
-        body = (
-            f"Dear {user_name},\n\n"
-            f"Thank you for your tutoring session! Here's a summary of what we covered:\n\n"
-            f"TOPICS DISCUSSED:\n{topics_covered}\n\n"
-            f"KEY CONCEPTS:\n{key_concepts}\n\n"
-            f"CONTENT REVIEWED:\n{content_reviewed}\n\n"
-            f"RECOMMENDED NEXT STEPS:\n{next_steps}\n\n"
-            f"Keep up the great work! Feel free to come back anytime.\n\n"
-            f"Best regards,\nYour AI Tutor — PrepX"
-        )
+        subject = f"Your AI Tutor Session Summary — {datetime.now().strftime('%B %d, %Y')}"
 
-        msg = MIMEMultipart()
+        html_body = f"""
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body style="margin:0;padding:0;background-color:#0a0a0a;font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0a0a0a;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="max-width:600px;width:100%;">
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#0e7490,#06b6d4);border-radius:16px 16px 0 0;padding:36px 40px;text-align:center;">
+              <h1 style="margin:0 0 4px 0;font-size:28px;font-weight:800;color:#ffffff;letter-spacing:-0.5px;">Prep<span style="color:#a5f3fc;">X</span></h1>
+              <p style="margin:0;font-size:13px;color:#cffafe;letter-spacing:1.5px;text-transform:uppercase;">AI Tutor Session Report</p>
+            </td>
+          </tr>
+          <!-- Body -->
+          <tr>
+            <td style="background-color:#111111;padding:40px;border-left:1px solid #222;border-right:1px solid #222;">
+              <!-- Greeting -->
+              <p style="margin:0 0 24px 0;font-size:16px;color:#e4e4e7;line-height:1.6;">Dear {user_name},</p>
+              <p style="margin:0 0 32px 0;font-size:15px;color:#a1a1aa;line-height:1.7;">Thank you for your tutoring session with PrepX. Below is a detailed summary of everything we covered, along with recommended next steps to continue your learning journey.</p>
+
+              <!-- Topics Discussed -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+                <tr>
+                  <td style="border-left:3px solid #06b6d4;padding-left:16px;">
+                    <h2 style="margin:0 0 10px 0;font-size:14px;font-weight:700;color:#06b6d4;text-transform:uppercase;letter-spacing:1px;">Topics Discussed</h2>
+                    <p style="margin:0;font-size:15px;color:#d4d4d8;line-height:1.8;">{topics_covered}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Key Concepts -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+                <tr>
+                  <td style="border-left:3px solid #06b6d4;padding-left:16px;">
+                    <h2 style="margin:0 0 10px 0;font-size:14px;font-weight:700;color:#06b6d4;text-transform:uppercase;letter-spacing:1px;">Key Concepts</h2>
+                    <p style="margin:0;font-size:15px;color:#d4d4d8;line-height:1.8;">{key_concepts}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Content Reviewed -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:28px;">
+                <tr>
+                  <td style="border-left:3px solid #06b6d4;padding-left:16px;">
+                    <h2 style="margin:0 0 10px 0;font-size:14px;font-weight:700;color:#06b6d4;text-transform:uppercase;letter-spacing:1px;">Content Reviewed</h2>
+                    <p style="margin:0;font-size:15px;color:#d4d4d8;line-height:1.8;">{content_reviewed}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Recommended Next Steps -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-bottom:32px;">
+                <tr>
+                  <td style="border-left:3px solid #06b6d4;padding-left:16px;">
+                    <h2 style="margin:0 0 10px 0;font-size:14px;font-weight:700;color:#06b6d4;text-transform:uppercase;letter-spacing:1px;">Recommended Next Steps</h2>
+                    <p style="margin:0;font-size:15px;color:#d4d4d8;line-height:1.8;">{next_steps}</p>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- CTA -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="padding:8px 0 0 0;">
+                    <a href="https://prepx.live" style="display:inline-block;background-color:#06b6d4;color:#ffffff;font-size:14px;font-weight:600;text-decoration:none;padding:14px 36px;border-radius:8px;">Continue Learning on PrepX</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="background-color:#0a0a0a;border-top:1px solid #222;border-radius:0 0 16px 16px;padding:28px 40px;text-align:center;">
+              <p style="margin:0 0 6px 0;font-size:13px;color:#71717a;">This session summary was generated by your AI Tutor on PrepX.</p>
+              <p style="margin:0;font-size:12px;color:#52525b;">PrepX  |  AI-Powered Learning Platform</p>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+"""
+
+        msg = MIMEMultipart("alternative")
         msg["From"] = gmail_user
         msg["To"] = to_email
         msg["Subject"] = subject
-        msg.attach(MIMEText(body, "plain"))
+        msg.attach(MIMEText(html_body, "html"))
 
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
