@@ -21,10 +21,10 @@ interface EagleViewProps {
 
 /* ── Layout constants ───────────────────────────────────────────────────── */
 
-const SEC_X_GAP = 320;
-const SEC_Y = 200;
-const CHILD_Y_OFFSET = 180;
-const CHILD_Y_GAP = 70;
+const SEC_X_GAP = 480;
+const SEC_Y = 260;
+const CHILD_Y_OFFSET = 200;
+const CHILD_Y_GAP = 90;
 
 /* ── Build graph from course data ───────────────────────────────────────── */
 
