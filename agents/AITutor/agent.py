@@ -1,14 +1,14 @@
-from dotenv import load_dotenv
+import os
 from pathlib import Path
 
+from dotenv import load_dotenv
 from livekit import agents
-from livekit.agents import AgentSession, Agent, room_io
-from livekit.plugins import google, silero, bey, noise_cancellation
-from livekit.plugins.turn_detector.multilingual import MultilingualModel
+from livekit.agents import AgentSession, Agent, RoomInputOptions
+from livekit.plugins import google, noise_cancellation, bey
+from livekit.agents import BackgroundAudioPlayer, AudioConfig, BuiltinAudioClip
+
 from tools import send_session_summary
 from prompts import TUTOR_INSTRUCTIONS
-import os
-from livekit.agents import BackgroundAudioPlayer, AudioConfig, BuiltinAudioClip
 
 _ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
 load_dotenv(_ENV_PATH, override=True)
@@ -26,12 +26,9 @@ async def entrypoint(ctx: agents.JobContext):
     load_dotenv(_ENV_PATH, override=True)
 
     session = AgentSession(
-        stt="deepgram/nova-3",
-        llm=google.LLM(model="gemini-2.5-flash"),
-        tts="cartesia/sonic-3",
-        vad=silero.VAD.load(),
-        turn_detection=MultilingualModel(),
-        preemptive_generation=True,
+        llm=google.realtime.RealtimeModel(
+            voice="Puck",
+        ),
     )
 
     avatar = bey.AvatarSession(
@@ -44,10 +41,9 @@ async def entrypoint(ctx: agents.JobContext):
     await session.start(
         room=ctx.room,
         agent=AITutor(),
-        room_options=room_io.RoomOptions(
-            audio_input=room_io.AudioInputOptions(
-                noise_cancellation=noise_cancellation.BVC(),
-            ),
+        room_input_options=RoomInputOptions(
+            noise_cancellation=noise_cancellation.BVC(),
+            video_enabled=True,
         ),
     )
 

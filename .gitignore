@@ -1,0 +1,21 @@
+# Virtual environments
+.venv/
+venv/
+agent_env/
+__pycache__/
+
+# Node
+node_modules/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
