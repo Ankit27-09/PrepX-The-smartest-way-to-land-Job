@@ -43,9 +43,28 @@ export function MediaTiles({ chatOpen }: MediaTilesProps) {
     const animationTransition = { type: 'spring' as const, stiffness: 500, damping: 50 };
 
     return (
-        <div className="pointer-events-none fixed inset-x-0 top-20 bottom-36 z-40">
-            <div className="relative mx-auto h-full max-w-4xl px-4">
-                <div className="flex h-full flex-col items-center justify-center gap-4">
+        <div
+            className={cn(
+                'pointer-events-none fixed z-40 transition-all duration-300',
+                chatOpen
+                    ? 'top-20 right-4 flex flex-col items-end gap-3'
+                    : 'inset-x-0 top-20 bottom-36'
+            )}
+        >
+            <div
+                className={cn(
+                    'relative',
+                    chatOpen ? 'w-auto' : 'mx-auto h-full max-w-4xl px-4'
+                )}
+            >
+                <div
+                    className={cn(
+                        'flex flex-col gap-4',
+                        chatOpen
+                            ? 'items-end'
+                            : 'h-full items-center justify-center'
+                    )}
+                >
                     {/* Avatar / Agent Tile */}
                     <AnimatePresence mode="popLayout">
                         {isAvatar ? (
@@ -57,11 +76,13 @@ export function MediaTiles({ chatOpen }: MediaTilesProps) {
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 transition={animationTransition}
                                 className={cn(
-                                    'transition-all duration-300',
-                                    chatOpen ? 'h-24 w-auto' : 'h-auto max-h-[60vh] w-full max-w-2xl'
+                                    'pointer-events-auto overflow-hidden transition-all duration-300',
+                                    chatOpen
+                                        ? 'h-40 w-56 rounded-xl'
+                                        : 'h-auto max-h-[60vh] w-full max-w-2xl rounded-2xl'
                                 )}
                             >
-                                <AvatarTile videoTrack={agentVideoTrack} className="h-full w-full rounded-2xl border border-white/10 shadow-lg" />
+                                <AvatarTile videoTrack={agentVideoTrack} className="h-full w-full border border-white/10 shadow-lg" />
                             </motion.div>
                         ) : (
                             <motion.div
@@ -72,7 +93,7 @@ export function MediaTiles({ chatOpen }: MediaTilesProps) {
                                 exit={{ opacity: 0, scale: 0.9 }}
                                 transition={animationTransition}
                                 className={cn(
-                                    'transition-all duration-300',
+                                    'pointer-events-auto transition-all duration-300',
                                     chatOpen ? 'h-24 w-24' : 'h-48 w-48'
                                 )}
                             >
@@ -83,7 +104,7 @@ export function MediaTiles({ chatOpen }: MediaTilesProps) {
 
                     {/* Camera / Screen Share Tiles */}
                     {hasSecondTile && (
-                        <div className="flex gap-4">
+                        <div className="flex gap-3">
                             <AnimatePresence>
                                 {isCameraEnabled && cameraTrack && (
                                     <motion.div
@@ -93,6 +114,7 @@ export function MediaTiles({ chatOpen }: MediaTilesProps) {
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.9 }}
                                         transition={animationTransition}
+                                        className="pointer-events-auto"
                                     >
                                         <VideoTile
                                             trackRef={cameraTrack}
@@ -108,6 +130,7 @@ export function MediaTiles({ chatOpen }: MediaTilesProps) {
                                         animate={{ opacity: 1, scale: 1 }}
                                         exit={{ opacity: 0, scale: 0.9 }}
                                         transition={animationTransition}
+                                        className="pointer-events-auto"
                                     >
                                         <VideoTile
                                             trackRef={screenShareTrack}
