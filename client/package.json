@@ -10,15 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
     "@livekit/components-react": "^2.9.20",
+    "@livekit/components-styles": "^1.2.0",
+    "@livekit/krisp-noise-filter": "^0.2.16",
+    "@livekit/track-processors": "^0.7.2",
+    "@monaco-editor/react": "^4.7.0",
     "@react-oauth/google": "^0.13.4",
     "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.1",
     "@xyflow/react": "^12.10.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^0.575.0",
     "livekit-client": "^2.17.2",
+    "lucide-react": "^0.575.0",
     "motion": "^12.34.3",
     "radix-ui": "^1.4.3",
     "react": "^19.2.0",
@@ -33,6 +38,7 @@
     "simplex-noise": "^4.0.3",
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.1",
+    "zod": "^3.25.0",
     "zustand": "^5.0.11"
   },
   "devDependencies": {

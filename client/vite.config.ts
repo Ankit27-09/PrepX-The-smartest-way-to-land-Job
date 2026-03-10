@@ -13,6 +13,14 @@ export default defineConfig({
   },
   server: {
     proxy: {
+      "/api/ai-tutor": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/api/career": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
       "/api": {
         target: "http://localhost:5000",
         changeOrigin: true,
