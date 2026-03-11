@@ -19,3 +19,10 @@ Thumbs.db
 # IDE
 .vscode/
 .idea/
+.env
+agents/.env
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
