@@ -4,6 +4,31 @@ import { Brain, Route, FileText, BookOpen, Search, MonitorPlay } from "lucide-re
 
 const features = [
   {
+    icon: Brain,
+    title: "AI Mock Interviews",
+    description:
+      "Practice via live video with an intelligent AI interviewer that adapts to your skill level. Get real-time feedback and improvement strategies.",
+    gradient: "from-blue-500 to-indigo-600",
+    shadowColor: "shadow-blue-500/20",
+  },
+  {
+    icon: MonitorPlay,
+    title: "Live AI Tutor",
+    description:
+      "Connect with a real-time voice and video webRTC agent. Share your code or screen and get instant, multimodal educational assistance.",
+    gradient: "from-emerald-500 to-teal-600",
+    shadowColor: "shadow-emerald-500/20",
+  },
+  
+  {
+    icon: Route,
+    title: "Graph Career Paths",
+    description:
+      "Visualize your future with an interactive graph-based career roadmap. Receive tailored, step-by-step milestones to land your dream role.",
+    gradient: "from-pink-500 to-rose-600",
+    shadowColor: "shadow-pink-500/20",
+  },
+  {
     icon: BookOpen,
     title: "AI Course Generation",
     description:
@@ -20,37 +45,13 @@ const features = [
     shadowColor: "shadow-violet-500/20",
   },
   {
-    icon: Route,
-    title: "Graph Career Paths",
-    description:
-      "Visualize your future with an interactive graph-based career roadmap. Receive tailored, step-by-step milestones to land your dream role.",
-    gradient: "from-pink-500 to-rose-600",
-    shadowColor: "shadow-pink-500/20",
-  },
-  {
     icon: Search,
     title: "ATS Job Discovery",
     description:
       "Unlock smart job hunting connected directly to company ATS systems. Instantly discover and track relevant job roles matching your customized roadmap.",
     gradient: "from-amber-500 to-orange-600",
     shadowColor: "shadow-amber-500/20",
-  },
-  {
-    icon: MonitorPlay,
-    title: "Live AI Tutor",
-    description:
-      "Connect with a real-time voice and video webRTC agent. Share your code or screen and get instant, multimodal educational assistance.",
-    gradient: "from-emerald-500 to-teal-600",
-    shadowColor: "shadow-emerald-500/20",
-  },
-  {
-    icon: Brain,
-    title: "AI Mock Interviews",
-    description:
-      "Practice via live video with an intelligent AI interviewer that adapts to your skill level. Get real-time feedback and improvement strategies.",
-    gradient: "from-blue-500 to-indigo-600",
-    shadowColor: "shadow-blue-500/20",
-  },
+  }
 ];
 
 const Features = () => {

@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import {
   X,
-  Sparkles,
   GraduationCap,
   Target,
   BarChart3,
@@ -99,9 +98,7 @@ export default function CreateCourseDialog({
 
               {/* Title */}
               <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-linear-to-br from-cyan-500 to-blue-600">
-                  <Sparkles className="h-5 w-5 text-white" />
-                </div>
+                
                 <div>
                   <h2 className="text-lg font-semibold text-white">
                     Create New Course
