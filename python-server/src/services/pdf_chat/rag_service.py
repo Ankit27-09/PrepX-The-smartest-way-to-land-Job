@@ -7,6 +7,7 @@ import os
 import uuid
 from dataclasses import dataclass, field
 
+import chromadb
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
 from langchain_core.messages import HumanMessage
@@ -22,8 +23,8 @@ from src.utils.image import is_image_data, looks_like_base64, resize_base64_imag
 
 # ── Models ────────────────────────────────────────────────────────────────────
 
-_SUMMARISE_MODEL = "gemini-2.5-flash"
-_VISION_MODEL = "gemini-2.5-flash"
+_SUMMARISE_MODEL = "gemini-2.5-pro"
+_VISION_MODEL = "gemini-2.5-pro"
 _EMBEDDING_MODEL = "models/gemini-embedding-001"
 
 
@@ -118,6 +119,9 @@ def generate_image_summaries(
 
 # ── Multi-vector retriever ───────────────────────────────────────────────────
 
+_chroma_client = chromadb.Client()
+
+
 def _build_retriever(
     text_summaries: list[str],
     texts: list[str],
@@ -127,7 +131,13 @@ def _build_retriever(
     images_b64: list[str],
     image_metadata: list[ImageMeta],
 ) -> MultiVectorRetriever:
+    # Reset collection to avoid "already exists with different settings"
+    existing = [c.name for c in _chroma_client.list_collections()]
+    if "mm_rag_app" in existing:
+        _chroma_client.delete_collection("mm_rag_app")
+
     vectorstore = Chroma(
+        client=_chroma_client,
         collection_name="mm_rag_app",
         embedding_function=GoogleGenerativeAIEmbeddings(model=_EMBEDDING_MODEL),
     )
@@ -137,17 +147,21 @@ def _build_retriever(
     retriever = MultiVectorRetriever(vectorstore=vectorstore, docstore=store, id_key=id_key)
 
     def _add(summaries: list[str], contents: list[str], doc_type: str, meta_list: list[dict] | None = None):
-        ids = [str(uuid.uuid4()) for _ in contents]
+        # Filter out empty/whitespace-only summaries — Gemini embeddings reject empty content
+        valid = [(i, s) for i, s in enumerate(summaries) if s and s.strip()]
+        if not valid:
+            return
+        ids = [str(uuid.uuid4()) for _ in valid]
         docs = []
-        for i, s in enumerate(summaries):
-            md = {id_key: ids[i], "type": doc_type}
-            if meta_list and i < len(meta_list):
-                md.update(meta_list[i])
+        for idx, (orig_i, s) in enumerate(valid):
+            md = {id_key: ids[idx], "type": doc_type}
+            if meta_list and orig_i < len(meta_list):
+                md.update(meta_list[orig_i])
             docs.append(Document(page_content=s, metadata=md))
         retriever.vectorstore.add_documents(docs)
         store_items = [
-            json.dumps({"content": c, "type": doc_type, "metadata": (meta_list[i] if meta_list and i < len(meta_list) else {})})
-            for i, c in enumerate(contents)
+            json.dumps({"content": contents[orig_i], "type": doc_type, "metadata": (meta_list[orig_i] if meta_list and orig_i < len(meta_list) else {})})
+            for orig_i, _ in valid
         ]
         retriever.docstore.mset(list(zip(ids, store_items)))
 
@@ -234,6 +248,10 @@ def initialise_rag(
     image_metadata: list[ImageMeta],
 ) -> dict:
     """Build the full RAG pipeline and store in the module-level session."""
+    # Filter out empty/whitespace-only text chunks to avoid embedding errors
+    texts = [t for t in texts if t and t.strip()]
+    tables = [t for t in tables if t and t.strip()]
+
     img_b64, img_summaries = generate_image_summaries(image_metadata)
     text_summaries, table_summaries = generate_text_summaries(texts, tables, summarize_texts=True)
 

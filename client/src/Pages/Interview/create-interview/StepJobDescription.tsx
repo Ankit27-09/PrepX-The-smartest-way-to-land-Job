@@ -8,7 +8,6 @@ import {
     X,
     FileUp,
     Pencil,
-    Sparkles,
     Loader2,
 } from "lucide-react";
 import { useCallback, useRef, useState } from "react";
@@ -290,7 +289,6 @@ export default function StepJobDescription({
                         </>
                     ) : (
                         <>
-                            <Sparkles className="h-4 w-4" />
                             Extract Details & Continue
                         </>
                     )}
