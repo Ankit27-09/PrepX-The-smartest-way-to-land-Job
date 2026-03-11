@@ -26,9 +26,6 @@ const CTASection = () => {
 
         <div className="relative z-10 rounded-3xl border border-white/10 bg-linear-to-b from-zinc-900/80 to-zinc-950/80 p-8 backdrop-blur-xl md:p-16">
           <div className="mx-auto max-w-3xl text-center">
-            <span className="mb-4 inline-block rounded-full border border-cyan-500/30 bg-cyan-500/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-cyan-400">
-              Limited Time Offer
-            </span>
 
             <h2 className="mb-5 text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">
               Ready to{" "}

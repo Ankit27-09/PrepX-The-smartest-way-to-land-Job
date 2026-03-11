@@ -3,7 +3,7 @@ import { useCareerStore } from "@/lib/career-store";
 import SimulateForm from "./SimulateForm";
 import CareerFitsView from "./CareerFitsView";
 import DashboardView from "./DashboardView";
-import { Loader2, RotateCcw, Sparkles } from "lucide-react";
+import { Loader2, RotateCcw } from "lucide-react";
 
 export default function CareerPathPage() {
   const step = useCareerStore((s) => s.step);
@@ -17,7 +17,6 @@ export default function CareerPathPage() {
         <div className="mb-10 flex items-center justify-between">
           <div>
             <h1 className="flex items-center gap-3 text-3xl font-bold text-white sm:text-4xl">
-              <Sparkles className="h-8 w-8 text-cyan-400" />
               Career Path Simulator
             </h1>
             <p className="mt-2 text-white/60">

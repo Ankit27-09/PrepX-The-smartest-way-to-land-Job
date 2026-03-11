@@ -203,7 +203,6 @@ export default function CourseHomeView({
               </>
             ) : (
               <>
-                <Sparkles className="h-4 w-4" />
                 Generate Section {nextSectionNumber}
               </>
             )}
