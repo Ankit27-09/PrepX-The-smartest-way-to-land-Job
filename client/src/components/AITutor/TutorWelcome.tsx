@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { BookOpen, Monitor, Mail, Sparkles } from 'lucide-react';
+import { BookOpen, Monitor, Mail} from 'lucide-react';
 
 interface TutorWelcomeProps {
     disabled: boolean;
@@ -23,9 +23,6 @@ export const TutorWelcome = forwardRef<HTMLDivElement, TutorWelcomeProps>(
                 {/* Logo / Title */}
                 <div className="relative mb-8">
                     <div className="flex items-center justify-center gap-3 mb-2">
-                        <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-cyan-500">
-                            <Sparkles className="h-7 w-7 text-white" />
-                        </div>
                         <h1 className="text-5xl font-bold tracking-tight text-white">
                             AI <span className="text-cyan-400">Tutor</span>
                         </h1>

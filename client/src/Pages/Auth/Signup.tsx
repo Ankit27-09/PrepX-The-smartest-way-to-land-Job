@@ -74,9 +74,6 @@ const Signup = () => {
         >
           {/* Logo */}
           <Link to="/" className="mb-10 inline-flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500">
-              <Sparkles className="h-5 w-5 text-white" />
-            </div>
             <span className="text-xl font-bold tracking-tight text-white">
               Prep<span className="text-cyan-400">X</span>
             </span>
@@ -265,9 +262,6 @@ const Signup = () => {
             className="mb-10"
           >
             <div className="relative">
-              <div className="flex h-20 w-20 items-center justify-center rounded-2xl border border-cyan-500/20 bg-cyan-500/10 shadow-2xl shadow-cyan-500/10">
-                <Sparkles className="h-10 w-10 text-cyan-400" />
-              </div>
               {/* Glow */}
               <div className="absolute -inset-4 -z-10 rounded-3xl bg-cyan-500/5 blur-2xl" />
             </div>

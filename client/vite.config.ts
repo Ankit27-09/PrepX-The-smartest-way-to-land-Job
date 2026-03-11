@@ -21,6 +21,30 @@ export default defineConfig({
         target: "http://localhost:8000",
         changeOrigin: true,
       },
+      "/api/pdf-chat": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/api/interviews": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/api/livekit": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/api/results": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/api/code": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
+      "/api/jobs": {
+        target: "http://localhost:8000",
+        changeOrigin: true,
+      },
       "/api": {
         target: "http://localhost:5000",
         changeOrigin: true,
