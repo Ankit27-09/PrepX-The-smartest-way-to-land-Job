@@ -1,46 +1,117 @@
 <div align="center">
 
-# PrepX
+<img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/a9f918aa-d2bf-4b05-adee-def7eb776435" />
+
 
 ### Your Unfair Advantage in the Tech Job Market
 
 Master live interviews, map complex career paths, and upskill faster with a real-time AI co-pilot.
-
-![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=white)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=for-the-badge&logo=fastapi&logoColor=white)
-![Express](https://img.shields.io/badge/Express-5-000000?style=for-the-badge&logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
-![LiveKit](https://img.shields.io/badge/LiveKit-WebRTC-FF5A5F?style=for-the-badge&logo=webrtc&logoColor=white)
-![Google Gemini](https://img.shields.io/badge/Google-Gemini-4285F4?style=for-the-badge&logo=google&logoColor=white)
-![LangGraph](https://img.shields.io/badge/LangGraph-Agents-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)
-
-[Features](#-features) · [Architecture](#-architecture) · [Getting Started](#-getting-started) · [Environment Variables](#-environment-variables) · [Tech Stack](#-tech-stack) · [API Reference](#-api-reference) · [License](#-license)
 
 </div>
 
 ---
 
 <!-- SCREENSHOT: Landing page hero section -->
-> 📸 **Screenshot:** *Add a screenshot of the landing page here*
+<img width="1900" height="862" alt="image" src="https://github.com/user-attachments/assets/953290a6-96a5-41c7-bc05-409fd5d38faf" />
 
-## 🧠 What is PrepX?
+PrepX is a full-stack, AI-powered career preparation platform that combines **real-time voice/video AI agents**, **multi-agent career intelligence**, and **adaptive learning** into a single unified experience. It goes beyond typical mock interview apps by integrating live AI tutoring with 3D avatars, multi-stage career simulations powered by LangGraph agent workflows, intelligent ATS-connected job discovery, and AI-generated personalized courses - all backed by Google Gemini, Groq LLMs, and LiveKit WebRTC.
 
-PrepX is a full-stack, AI-powered career preparation platform that combines **real-time voice/video AI agents**, **multi-agent career intelligence**, and **adaptive learning** into a single unified experience. It goes beyond typical mock interview apps by integrating live AI tutoring with 3D avatars, multi-stage career simulations powered by LangGraph agent workflows, intelligent ATS-connected job discovery, and AI-generated personalized courses — all backed by Google Gemini, Groq LLMs, and LiveKit WebRTC.
 
-### From Zero to Interview Hero in 4 Steps
+## The Core Features
 
-| Step | What Happens |
-|------|-------------|
-| **1. Career Planning** | Interactive path mapping, live ATS job discovery, and skill gap analysis |
-| **2. Smart Learning** | AI-generated courses, chat with PDFs via RAG, dynamic flashcards & mind maps |
-| **3. Live AI Tutor** | Real-time WebRTC room with voice/video AI agent, screen sharing, and code pairing |
-| **4. Mock Interviews** | Simulated tech rounds with deep performance metrics — walk in with confidence |
+### 1. Real Time 3D AI Interview
+
+Practice via live video with an intelligent AI interviewer that adapts to your skill level. Get real-time feedback, proctoring analytics, and detailed performance breakdowns.
+<img width="1422" height="668" alt="image" src="https://github.com/user-attachments/assets/ffc64cb8-d433-4ef1-add0-443c57e1c035" />
+
+
+**Interview Creation : 5-Step Wizard:**
+1. **Job Description** - Upload PDF or paste JD text; AI extracts role, skills, requirements via Groq LLM
+2. **Interview Context** - Resume upload, experience level, focus areas
+3. **Settings** - Duration, difficulty, interview type (technical/behavioral/mixed)
+4. **Review** - Preview all settings before publishing
+5. **Publish** - Go live and enter the interview room
+
+**Interview Room Features:**
+- **Live Video** - WebRTC-powered face-to-face with AI interviewer
+- **Code Editor** - Monaco Editor with syntax highlighting, multiple language support
+- **Coding Questions** - Real problems from LeetCode GraphQL API and Codeforces API
+- **Whiteboard** - Excalidraw integration for system design and diagramming
+- **Timer** - Configurable countdown timer
+- **Chat Panel** - Text-based communication alongside voice
+- **Fullscreen Mode** - Immersive fullscreen interview environment
+
+**Results & Analytics:**
+- **Radar Chart** - Scores across Technical, Communication, Behavioral, Problem-Solving, and Confidence
+- **Skill Assessments** - Per-skill feedback with detailed comments
+- **Proctoring Metrics** - Eye contact, attention, posture, noise levels, and face visibility tracking
+- **Malpractice Detection** - Flagged incidents with severity levels and timestamps
+- **Performance Timeline** - Visual progression throughout the interview
+
+<!-- SCREENSHOT: Interview results page with radar chart and analytics -->
+> 📸 **Screenshot:** *Add a screenshot of the interview results analytics here*
 
 ---
 
-## ✨ Features
+### 2. Real Time AI Tutor Assistant
+
+Connect with a real-time voice and video AI tutor powered by a 3D avatar. Share your screen, code along, and get instant multimodal educational assistance.
+
+<img width="1391" height="735" alt="image" src="https://github.com/user-attachments/assets/7dd09836-73b2-410a-96de-125931eabc8e" />
+<img width="989" height="611" alt="image" src="https://github.com/user-attachments/assets/783a7a7c-9ec1-4019-b752-483299d0cf83" />
+
+- **3D Avatar** - Photorealistic avatar powered by Bey SDK with real-time lip sync
+- **Voice Conversation** - Natural voice interaction via Google Gemini Realtime API with "Puck" voice synthesis
+- **Screen Sharing** - Share your screen for the tutor to see and discuss your code or documents
+- **Camera Support** - Enable your webcam for a face-to-face tutoring experience
+- **Live Transcription** - Real-time speech-to-text transcription displayed as chat messages
+- **Text Chat** - Type messages alongside voice for a mixed-mode interaction
+- **Session Summaries** - AI generates detailed session summaries emailed as branded HTML with topics, concepts, and next steps
+- **Adaptive Teaching** - Explanations adapt to your level; errors are guided through step-by-step
+- **WebRTC** - Powered by LiveKit for low-latency real-time audio/video streaming
+
+
+---
+
+### 3. ATS Job Discovery
+
+Prepx uses a **8-Agent Pipeline** to scour the web, aggregate listings, normalize and deduplicate jobs, and score them against your resume.
+Get deep market analysis (salary trends, skill gaps) from Google Jobs, ATS Feeds and more.
+
+<img width="1837" height="871" alt="image" src="https://github.com/user-attachments/assets/c7a97ee5-054e-45be-a8e8-82a3ae4836cf" />
+<img width="1179" height="611" alt="image" src="https://github.com/user-attachments/assets/5226f3a6-42df-48b8-8c11-fbc322ba2689" />
+
+**Multi-Agent Pipeline:**
+```
+ResumeParser → IntentParser → QueryGenerator → DiscoveryAgent → NormalizationAgent → ScoringAgent → InsightsAgent
+```
+
+- **Resume-Powered** — Upload resume or enter profile manually; AI extracts skills, experience, and domains
+- **Multi-Source Discovery** — Aggregates jobs from SerpAPI, Greenhouse ATS, Lever ATS, and configurable job boards
+- **Direct ATS Access** — Scrapes listings from 30+ companies including Airbnb, Stripe, Netflix, Coinbase, Databricks, Notion, Figma, Vercel, and more
+- **AI Scoring** — Each job scored against your profile with match percentage, matching/missing skills breakdown
+- **Chat Refinement** — Conversational interface to refine search results with natural language
+- **Job Enrichment** — Detailed per-job breakdown with skill gap analysis
+- **Search History** — Track past searches with per-user persistence
+- **Location Filtering** — Onsite, remote, hybrid with salary range data
+
+---
+
+### 4. Smart PDF Chat
+
+Transform static documents into interactive learning experiences. Upload PDFs and images, then chat directly with your documents using multi-modal RAG.
+
+<img width="1392" height="742" alt="image" src="https://github.com/user-attachments/assets/9a7ed957-e101-49a6-929a-df71e20b1ea0" />
+<img width="1298" height="739" alt="image" src="https://github.com/user-attachments/assets/63419665-1199-4ee6-80c0-9c57575595f6" />
+
+- **Multi-Format Upload** - Drag-and-drop PDFs and images with real-time processing feedback
+- **Text Extraction** - PyPDF + PyMuPDF for robust text and embedded image extraction
+- **Image Intelligence** - Automatic image extraction from PDFs with page tracking; vision model analysis of images
+- **Vector Search** - ChromaDB multi-vector retriever with Gemini embeddings (`gemini-embedding-001`)
+- **Contextual Answers** - Markdown-formatted responses with relevant document references and image previews
+- **Code Support** - Syntax-highlighted code blocks with copy-to-clipboard
+  
+---
 
 ### 🎓 AI Course Generation
 
@@ -60,22 +131,6 @@ Generate fully customized courses tailored to your goals — with interactive ar
 
 <!-- SCREENSHOT: Flashcard viewer or mind map view -->
 > 📸 **Screenshot:** *Add a screenshot of the flashcard viewer or mind map here*
-
----
-
-### 💬 Smart PDF Chat
-
-Transform static documents into interactive learning experiences. Upload PDFs and images, then chat directly with your documents using multi-modal RAG.
-
-<!-- SCREENSHOT: PDF Chat interface with uploaded document and conversation -->
-> 📸 **Screenshot:** *Add a screenshot of the PDF Chat interface here*
-
-- **Multi-Format Upload** — Drag-and-drop PDFs and images with real-time processing feedback
-- **Text Extraction** — PyPDF + PyMuPDF for robust text and embedded image extraction
-- **Image Intelligence** — Automatic image extraction from PDFs with page tracking; vision model analysis of images
-- **Vector Search** — ChromaDB multi-vector retriever with Gemini embeddings (`gemini-embedding-001`)
-- **Contextual Answers** — Markdown-formatted responses with relevant document references and image previews
-- **Code Support** — Syntax-highlighted code blocks with copy-to-clipboard
 
 ---
 
@@ -113,80 +168,6 @@ MarketScout → GapAnalyst → TimelineSimulator → FinancialAdvisor → RiskAs
 
 ---
 
-### 🔍 ATS Job Discovery
-
-Smart job hunting connected directly to company ATS systems. Powered by a 7-agent LangGraph workflow that discovers, normalizes, and scores jobs against your profile.
-
-<!-- SCREENSHOT: Job discovery results page with scored matches -->
-> 📸 **Screenshot:** *Add a screenshot of the job discovery results here*
-
-**Multi-Agent Pipeline:**
-```
-ResumeParser → IntentParser → QueryGenerator → DiscoveryAgent → NormalizationAgent → ScoringAgent → InsightsAgent
-```
-
-- **Resume-Powered** — Upload resume or enter profile manually; AI extracts skills, experience, and domains
-- **Multi-Source Discovery** — Aggregates jobs from SerpAPI, Greenhouse ATS, Lever ATS, and configurable job boards
-- **Direct ATS Access** — Scrapes listings from 30+ companies including Airbnb, Stripe, Netflix, Coinbase, Databricks, Notion, Figma, Vercel, and more
-- **AI Scoring** — Each job scored against your profile with match percentage, matching/missing skills breakdown
-- **Chat Refinement** — Conversational interface to refine search results with natural language
-- **Job Enrichment** — Detailed per-job breakdown with skill gap analysis
-- **Search History** — Track past searches with per-user persistence
-- **Location Filtering** — Onsite, remote, hybrid with salary range data
-
----
-
-### 🤖 Live AI Tutor
-
-Connect with a real-time voice and video AI tutor powered by a 3D avatar. Share your screen, code along, and get instant multimodal educational assistance.
-
-<!-- SCREENSHOT: AI Tutor session with avatar video and chat -->
-> 📸 **Screenshot:** *Add a screenshot of the AI Tutor session here*
-
-- **3D Avatar** — Photorealistic avatar powered by Bey SDK with real-time lip sync
-- **Voice Conversation** — Natural voice interaction via Google Gemini Realtime API with "Puck" voice synthesis
-- **Screen Sharing** — Share your screen for the tutor to see and discuss your code or documents
-- **Camera Support** — Enable your webcam for a face-to-face tutoring experience
-- **Live Transcription** — Real-time speech-to-text transcription displayed as chat messages
-- **Text Chat** — Type messages alongside voice for a mixed-mode interaction
-- **Session Summaries** — AI generates detailed session summaries emailed as branded HTML with topics, concepts, and next steps
-- **Adaptive Teaching** — Explanations adapt to your level; errors are guided through step-by-step
-- **WebRTC** — Powered by LiveKit for low-latency real-time audio/video streaming
-
----
-
-### 🎤 AI Mock Interviews
-
-Practice via live video with an intelligent AI interviewer that adapts to your skill level. Get real-time feedback, proctoring analytics, and detailed performance breakdowns.
-
-<!-- SCREENSHOT: Interview room with video, code editor, and timer -->
-> 📸 **Screenshot:** *Add a screenshot of the interview room here*
-
-**Interview Creation — 5-Step Wizard:**
-1. **Job Description** — Upload PDF or paste JD text; AI extracts role, skills, requirements via Groq LLM
-2. **Interview Context** — Resume upload, experience level, focus areas
-3. **Settings** — Duration, difficulty, interview type (technical/behavioral/mixed)
-4. **Review** — Preview all settings before publishing
-5. **Publish** — Go live and enter the interview room
-
-**Interview Room Features:**
-- **Live Video** — WebRTC-powered face-to-face with AI interviewer
-- **Code Editor** — Monaco Editor with syntax highlighting, multiple language support
-- **Coding Questions** — Real problems from LeetCode GraphQL API and Codeforces API
-- **Whiteboard** — Excalidraw integration for system design and diagramming
-- **Timer** — Configurable countdown timer
-- **Chat Panel** — Text-based communication alongside voice
-- **Fullscreen Mode** — Immersive fullscreen interview environment
-
-**Results & Analytics:**
-- **Radar Chart** — Scores across Technical, Communication, Behavioral, Problem-Solving, and Confidence
-- **Skill Assessments** — Per-skill feedback with detailed comments
-- **Proctoring Metrics** — Eye contact, attention, posture, noise levels, and face visibility tracking
-- **Malpractice Detection** — Flagged incidents with severity levels and timestamps
-- **Performance Timeline** — Visual progression throughout the interview
-
-<!-- SCREENSHOT: Interview results page with radar chart and analytics -->
-> 📸 **Screenshot:** *Add a screenshot of the interview results analytics here*
 
 ---
 
