@@ -1,4 +1,3 @@
-import { Sparkles } from "lucide-react";
 
 const footerLinks = {
   Product: [
@@ -38,7 +37,6 @@ const Footer = () => {
           <div className="col-span-2 md:col-span-1">
             <a href="#" className="flex items-center gap-2">
               <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500">
-                <Sparkles className="h-5 w-5 text-white" />
               </div>
               <span className="text-xl font-bold tracking-tight text-white">
                 Prep<span className="text-cyan-400">X</span>

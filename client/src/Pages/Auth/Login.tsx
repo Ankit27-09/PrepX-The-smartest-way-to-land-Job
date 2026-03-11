@@ -2,7 +2,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, useLocation, Navigate } from "react-router-dom";
 import { motion } from "motion/react";
-import { Eye, EyeOff, Sparkles, ArrowRight, Loader2 } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, Loader2 } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -68,9 +68,6 @@ const Login = () => {
         >
           {/* Logo */}
           <Link to="/" className="mb-10 inline-flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-cyan-500">
-              <Sparkles className="h-5 w-5 text-white" />
-            </div>
             <span className="text-xl font-bold tracking-tight text-white">
               Prep<span className="text-cyan-400">X</span>
             </span>
@@ -279,9 +276,8 @@ const Login = () => {
             className="mt-4"
           >
             <h2 className="mb-4 text-3xl font-bold leading-tight text-white xl:text-4xl">
-              10K+ users. AI-powered
+              Your journey from learning to landing the job starts here.
               <br />
-              <span className="text-zinc-400">interview preparation.</span>
             </h2>
             <Link
               to="/signup"

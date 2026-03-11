@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
-import { Plus, Search, BookOpen, BarChart3, Clock, Sparkles, Loader2, Trash2 } from "lucide-react";
+import { Plus, Search, BookOpen, BarChart3, Clock, Loader2, Trash2 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { fetchCourses, deleteCourse } from "@/store/courses/coursesSlice";
 import type { Course } from "./types";
@@ -152,7 +152,6 @@ export default function CoursesPage() {
               {courses.length} courses
             </span>
             <span className="flex items-center gap-1.5">
-              <Sparkles className="h-4 w-4 text-cyan-500" />
               AI-powered
             </span>
           </div>
