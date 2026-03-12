@@ -46,7 +46,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       "/api": {
-        target: "http://localhost:5000",
+        target: "https://prepx-tfy9.onrender.com" ,
         changeOrigin: true,
       },
     },
