@@ -16,7 +16,8 @@ export function MicrophoneSettings() {
             'krisp buffer dropped, noise filter versions >= 0.3.2 will automatically disable the filter',
           );
         },
-      },
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } as any,
     },
   );
 

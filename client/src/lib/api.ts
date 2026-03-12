@@ -93,7 +93,7 @@ import type {
   Course,
   CourseDetail,
   SectionContent,
-} from "@/pages/Courses/types";
+} from "@/Pages/Courses/types";
 
 export async function apiGetCourses(): Promise<Course[]> {
   const courses = await request<Course[]>("/courses");

@@ -48,6 +48,7 @@ export const WavyBackground = ({
 
   const init = () => {
     canvas = canvasRef.current;
+    if (!canvas) return;
     ctx = canvas.getContext("2d");
     if (!ctx) return;
     w = ctx.canvas.width = window.innerWidth;

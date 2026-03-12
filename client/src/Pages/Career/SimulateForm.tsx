@@ -718,7 +718,6 @@ function PreferencesStep({ profile, setProfile }: StepProps) {
 
 function ReviewStep({
   profile,
-  onSubmit,
 }: {
   profile: CareerProfile;
   onSubmit: () => void;

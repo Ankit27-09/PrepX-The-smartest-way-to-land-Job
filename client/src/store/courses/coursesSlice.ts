@@ -8,7 +8,7 @@ import {
   apiGenerateSection,
   type CreateCourseInput,
 } from "@/lib/api";
-import type { Course, CourseDetail, SectionContent } from "@/pages/Courses/types";
+import type { Course, CourseDetail, SectionContent } from "@/Pages/Courses/types";
 
 /* ── State ───────────────────────────────────────────────────────────────── */
 

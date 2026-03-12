@@ -2,7 +2,7 @@
 import { useState, type FormEvent } from "react";
 import { Link, useNavigate, Navigate } from "react-router-dom";
 import { motion } from "motion/react";
-import { Eye, EyeOff, Sparkles, ArrowRight, Check, Loader2 } from "lucide-react";
+import { Eye, EyeOff, ArrowRight, Check, Loader2 } from "lucide-react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { Spotlight } from "@/components/ui/spotlight-new";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";

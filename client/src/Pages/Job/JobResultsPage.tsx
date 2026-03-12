@@ -9,12 +9,9 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-    Briefcase,
     MapPin,
     Building2,
-    Clock,
     ArrowLeft,
-    ExternalLink,
     X,
     Loader2,
     CheckCircle2,

@@ -5,7 +5,6 @@ import {
   Gamepad2,
   TrendingUp,
   Loader2,
-  Sparkles,
 } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import {

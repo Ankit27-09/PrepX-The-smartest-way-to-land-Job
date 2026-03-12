@@ -9,10 +9,6 @@ import {
     Loader2,
     Calendar,
     Search,
-    Clock,
-    Sparkles,
-    ChevronRight,
-    ArrowRight,
     Briefcase,
     Trash2
 } from 'lucide-react';
