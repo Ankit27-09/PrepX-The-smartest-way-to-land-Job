@@ -11,7 +11,6 @@ Master live interviews, map complex career paths, and upskill faster with a real
 
 ---
 
-<!-- SCREENSHOT: Landing page hero section -->
 <img width="1900" height="862" alt="image" src="https://github.com/user-attachments/assets/953290a6-96a5-41c7-bc05-409fd5d38faf" />
 
 PrepX is a full-stack, AI-powered career preparation platform that combines **real-time voice/video AI agents**, **multi-agent career intelligence**, and **adaptive learning** into a single unified experience. It goes beyond typical mock interview apps by integrating live AI tutoring with 3D avatars, multi-stage career simulations powered by LangGraph agent workflows, intelligent ATS-connected job discovery, and AI-generated personalized courses - all backed by Google Gemini, Groq LLMs, and LiveKit WebRTC.
@@ -23,6 +22,8 @@ PrepX is a full-stack, AI-powered career preparation platform that combines **re
 
 Practice via live video with an intelligent AI interviewer that adapts to your skill level. Get real-time feedback, proctoring analytics, and detailed performance breakdowns.
 <img width="1422" height="668" alt="image" src="https://github.com/user-attachments/assets/ffc64cb8-d433-4ef1-add0-443c57e1c035" />
+<img width="1627" height="817" alt="image" src="https://github.com/user-attachments/assets/ee188ca6-48b9-4940-b5ee-9cdcae8de757" />
+<img width="1617" height="915" alt="image" src="https://github.com/user-attachments/assets/efb114aa-0ddc-4ba2-957e-8364c94d45a7" />
 
 
 **Interview Creation : 5-Step Wizard:**
@@ -48,9 +49,6 @@ Practice via live video with an intelligent AI interviewer that adapts to your s
 - **Malpractice Detection** - Flagged incidents with severity levels and timestamps
 - **Performance Timeline** - Visual progression throughout the interview
 
-<!-- SCREENSHOT: Interview results page with radar chart and analytics -->
-> 📸 **Screenshot:** *Add a screenshot of the interview results analytics here*
-
 ---
 
 ### 2. Real Time AI Tutor Assistant
@@ -69,7 +67,6 @@ Connect with a real-time voice and video AI tutor powered by a 3D avatar. Share 
 - **Session Summaries** - AI generates detailed session summaries emailed as branded HTML with topics, concepts, and next steps
 - **Adaptive Teaching** - Explanations adapt to your level; errors are guided through step-by-step
 - **WebRTC** - Powered by LiveKit for low-latency real-time audio/video streaming
-
 
 ---
 
@@ -117,8 +114,10 @@ Transform static documents into interactive learning experiences. Upload PDFs an
 
 Generate fully customized courses tailored to your goals — with interactive articles, flashcards, mind maps, and multi-format quizzes.
 
-<!-- SCREENSHOT: Course generation page showing a generated course with sections -->
-> 📸 **Screenshot:** *Add a screenshot of a generated course overview here*
+<img width="1606" height="528" alt="image" src="https://github.com/user-attachments/assets/82757ef0-2d20-4106-a779-6f332d6f2d5c" />
+<img width="1621" height="815" alt="image" src="https://github.com/user-attachments/assets/54e3d7a0-4018-4c8a-a9cc-c22fc4035d2f" />
+<img width="1622" height="803" alt="image" src="https://github.com/user-attachments/assets/b5ce2d91-6d6b-4d48-b53a-150df436b2ab" />
+
 
 - **Customizable** — Pick topic, difficulty level, learning goal, tone, and section count (up to 20)
 - **Rich Content** — Each section includes multi-page articles with markdown rendering
@@ -129,29 +128,21 @@ Generate fully customized courses tailored to your goals — with interactive ar
 - **Progress Tracking** — Per-section completion, article read status, quiz scores, and overall progress bars
 - **Powered by** — Google Gemini with structured JSON output and retry logic for reliable generation
 
-<!-- SCREENSHOT: Flashcard viewer or mind map view -->
-> 📸 **Screenshot:** *Add a screenshot of the flashcard viewer or mind map here*
-
 ---
 
 ### 🗺️ Career Path Simulator
 
 Visualize your future with a comprehensive multi-stage career simulation powered by a 9-node LangGraph agent workflow.
 
-<!-- SCREENSHOT: Career path dashboard showing simulation results -->
-> 📸 **Screenshot:** *Add a screenshot of the career simulation dashboard here*
+<img width="1788" height="685" alt="image" src="https://github.com/user-attachments/assets/d1ab1dbd-b217-4787-b9a2-d89f91eb78a4" />
+<img width="1623" height="811" alt="image" src="https://github.com/user-attachments/assets/d3ad94a5-ce79-44ec-9a39-7049b540089b" />
+<img width="1626" height="803" alt="image" src="https://github.com/user-attachments/assets/a0bbed48-c2ce-4300-82a0-6c84a086bdc3" />
 
 **Two-Stage AI Pipeline:**
 
 **Stage 1 — Career Matching:**
-```
-ProfileParser → CareerMatcher → 3 Best-Fit Career Paths (with scores & reasoning)
-```
 
 **Stage 2 — Full Simulation (per selected career):**
-```
-MarketScout → GapAnalyst → TimelineSimulator → FinancialAdvisor → RiskAssessor → DashboardFormatter
-```
 
 - **Profile Analysis** — Upload resume or fill detailed form (skills, education, aspirations, psychometrics)
 - **3 Career Matches** — AI scores each fit across skills, interests, market demand, and personality
@@ -163,13 +154,6 @@ MarketScout → GapAnalyst → TimelineSimulator → FinancialAdvisor → RiskAs
 - **Interactive Dashboard** — Financial charts, risk matrices, and actionable roadmaps
 - **Resume Upload** — Auto-extract profile data from uploaded PDF resumes
 
-<!-- SCREENSHOT: Career fits result page with 3 career matches -->
-> 📸 **Screenshot:** *Add a screenshot of the career matches result here*
-
----
-
-
----
 
 ### 🎙️ Career Voice Counselor
 
@@ -181,70 +165,14 @@ Real-time voice-based career counseling agent with MongoDB-backed context awaren
 - **Multi-Channel** — Supports both web-based audio and SIP telephony
 
 ---
+<img width="1626" height="821" alt="image" src="https://github.com/user-attachments/assets/f5b776a8-e193-42a2-af7c-779928592f03" />
+
+---
+
 
 ## 🏗️ Architecture
 
-```
-┌──────────────────────────────────────────────────────────────────────┐
-│                          CLIENT (React 19)                          │
-│                        localhost:5173 (Vite)                        │
-│                                                                      │
-│  ┌─────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌───────────┐  │
-│  │ Courses │ │ PDF Chat │ │ Career   │ │ Jobs     │ │ Interviews│  │
-│  │         │ │          │ │ Path     │ │ Discovery│ │ & Tutor   │  │
-│  └────┬────┘ └────┬─────┘ └────┬─────┘ └────┬─────┘ └─────┬─────┘  │
-│       │           │            │             │             │         │
-│       │      Vite Proxy: /api → :5000  |  /api/ai-tutor,           │
-│       │           /api/career, /api/jobs, /api/interviews → :8000   │
-└───────┼───────────┼────────────┼─────────────┼─────────────┼────────┘
-        │           │            │             │             │
-   ┌────▼───────────▼────┐ ┌────▼─────────────▼─────────────▼────────┐
-   │   NODE.JS SERVER    │ │         PYTHON SERVER (FastAPI)          │
-   │   Express 5         │ │         localhost:8000                   │
-   │   localhost:5000     │ │                                         │
-   │                      │ │  ┌──────────┐  ┌───────────────────┐   │
-   │  • Auth (JWT/OAuth)  │ │  │ PDF Chat │  │ Interview System  │   │
-   │  • Course CRUD       │ │  │ (RAG)    │  │ (Groq + LiveKit)  │   │
-   │  • Course Generation │ │  └──────────┘  └───────────────────┘   │
-   │    (Gemini API)      │ │  ┌──────────┐  ┌───────────────────┐   │
-   │  • Quiz & Flashcard  │ │  │ Career   │  │ Job Discovery     │   │
-   │    Tracking          │ │  │ Simulator│  │ (7-Agent Graph)   │   │
-   │                      │ │  │(LangGraph│  │                   │   │
-   │                      │ │  │ 9 Agents)│  │                   │   │
-   └──────────┬───────────┘ │  └──────────┘  └───────────────────┘   │
-              │             └────────────┬───────────────────────────-┘
-              │                          │
-   ┌──────────▼──────────────────────────▼───────────────────────────┐
-   │                        MONGODB ATLAS                            │
-   │                                                                  │
-   │  Collections: users, ai_courses, ai_course_sections,            │
-   │  article_pages, flashcards, mcq_questions, true_false_questions,│
-   │  fill_up_questions, mind_maps, interviews, job_searches,        │
-   │  career_roadmaps                                                 │
-   └──────────────────────────────────────────────────────────────────┘
-
-   ┌──────────────────────────────────────────────────────────────────┐
-   │                      LIVEKIT AGENTS                              │
-   │                                                                  │
-   │  ┌────────────────┐  ┌──────────────────┐  ┌────────────────┐   │
-   │  │  AI Tutor      │  │  AI Interviewer  │  │  Career Voice  │   │
-   │  │  Agent         │  │  Agent           │  │  Counselor     │   │
-   │  │                │  │                  │  │                │   │
-   │  │ • Gemini RT    │  │ • Live Video     │  │ • Gemini RT    │   │
-   │  │ • Bey Avatar   │  │ • Code Eval      │  │ • MongoDB      │   │
-   │  │ • Email Summary│  │ • Proctoring     │  │   Context      │   │
-   │  └────────────────┘  └──────────────────┘  └────────────────┘   │
-   └──────────────────────────────────────────────────────────────────┘
-
-   ┌──────────────────────────────────────────────────────────────────┐
-   │                    EXTERNAL SERVICES                             │
-   │                                                                  │
-   │  Google Gemini API  •  Groq API (Llama 3.3)  •  SerpAPI         │
-   │  LiveKit Cloud  •  Bey Avatars  •  ChromaDB  •  Google OAuth    │
-   │  LeetCode API  •  Codeforces API  •  Greenhouse/Lever ATS       │
-   │  Gmail SMTP                                                      │
-   └──────────────────────────────────────────────────────────────────┘
-```
+<img width="933" height="750" alt="image" src="https://github.com/user-attachments/assets/73dd198d-3cb5-4383-b277-dc76b1938b65" />
 
 ---
 
