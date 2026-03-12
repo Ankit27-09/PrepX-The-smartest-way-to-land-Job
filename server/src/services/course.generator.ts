@@ -433,7 +433,7 @@ export async function createCourseAndGenerateFirstSection(
       input.sectionCount,
       ""
     );
-    await persistSection(courseId, 1, sectionContent, "");
+    await persistSection(courseId!, 1, sectionContent, "");
 
     await prisma.aiCourse.update({
       where: { id: courseId },
@@ -476,8 +476,8 @@ export async function generateNextSection(
     });
 
     const previousContext = sections
-      .filter((s) => s.sectionNumber < sectionNumber)
-      .map((s) => `Section ${s.sectionNumber}: ${s.title}`)
+      .filter((s: (typeof sections)[number]) => s.sectionNumber < sectionNumber)
+      .map((s: (typeof sections)[number]) => `Section ${s.sectionNumber}: ${s.title}`)
       .join("\n");
 
     const input: CreateCourseInput = {

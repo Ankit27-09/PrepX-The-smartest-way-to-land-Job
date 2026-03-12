@@ -69,7 +69,7 @@ export async function getAllCourses(
     // Compute content-based progress for each course
     const progressMap = new Map<string, number>();
     await Promise.all(
-      courses.map(async (course) => {
+      courses.map(async (course: (typeof courses)[number]) => {
         const cid = course.id;
         const [
           readArticles, totalArticles,
@@ -103,7 +103,7 @@ export async function getAllCourses(
       })
     );
 
-    const result = courses.map((c) => ({
+    const result = courses.map((c: (typeof courses)[number]) => ({
       ...c,
       progress: progressMap.get(c.id) ?? 0,
     }));
@@ -311,11 +311,11 @@ export async function getSectionWithContent(
     // Transform data for the frontend
     const transformed = {
       ...section,
-      mcqQuestions: section.mcqQuestions.map((q) => ({
+      mcqQuestions: section.mcqQuestions.map((q: (typeof section.mcqQuestions)[number]) => ({
         ...q,
         options: typeof q.options === "string" ? JSON.parse(q.options) : q.options,
       })),
-      fillUpQuestions: section.fillUpQuestions.map((q) => ({
+      fillUpQuestions: section.fillUpQuestions.map((q: (typeof section.fillUpQuestions)[number]) => ({
         ...q,
         question: q.sentence,
       })),
